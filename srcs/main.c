@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 18:59:26 by lbaela            #+#    #+#             */
-/*   Updated: 2022/01/19 13:33:06 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/01/19 15:50:55 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,18 @@
 #include "error_msgs.h"
 #include "ft_printf.h"
 
-t_scene	*new_scene(t_camera *cam, t_object *obj)
+t_scene	*new_scene(t_camera *cam, int n_objects)
 {
-	t_scene	*scene;
+	t_scene		*scene;
+	t_object	**objects;
 
 	scene = malloc(sizeof(t_scene));
-	if (cam == NULL)
+	objects = malloc(sizeof(t_object *) * (n_objects + 1));
+	if (cam == NULL || objects == NULL)
 		exit_on_error(-1, ERR_MALLOC);
 	ft_memset(scene, 0, sizeof(t_scene));
 	scene->cams = cam;
-	scene->objs = obj;
+	scene->objs = malloc(sizeof(t_object));
 	return (scene);
 }
 
@@ -52,12 +54,17 @@ void	init_minirt(t_minirt *minirt)
 	t_vector	*cam_dir;
 	t_camera	*cam;
 
-	sphere_c = new_vect(3, 2, -32);
-	sphere = new_sphere(sphere_c, 12 / 2, COL_RED);
 	cam_v = new_vect(0, 0, 0);
 	cam_dir = new_vect(0, 0, -1);
 	cam = create_camera(cam_v, cam_dir, 70);
-	minirt->scene = new_scene(cam, sphere);
+	minirt->scene = new_scene(cam, 2);
+	sphere_c = new_vect(3, 2, -32);
+	sphere = new_sphere(sphere_c, 12 / 2, COL_RED);
+	minirt->scene->objs[0] = sphere;
+	sphere_c = new_vect(-5, -2, -32);
+	sphere = new_sphere(sphere_c, 14 / 2, COL_ORANGE);
+	minirt->scene->objs[1] = sphere;
+	minirt->scene->objs[2] = NULL;
 	minirt->scene->width = WIN_WIDTH;
 	minirt->scene->height = WIN_HEIGHT;
 }

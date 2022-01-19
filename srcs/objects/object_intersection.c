@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:02:01 by lbaela            #+#    #+#             */
-/*   Updated: 2022/01/19 13:05:41 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/01/19 15:49:53 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "camera.h"
 #include "objects.h"
 
-static int	sphere_intersects(t_scene *scene, t_vector *ray)
+static int	sphere_intersects(t_scene *scene, t_object *obj, t_vector *ray)
 {
 	float		b;
 	float		c;
@@ -28,9 +28,9 @@ static int	sphere_intersects(t_scene *scene, t_vector *ray)
 
 	dist_1 = 0;
 	dist_2 = 0;
-	cam_sp = vect_substract(scene->cams->origin, scene->objs->center);
+	cam_sp = vect_substract(scene->cams->origin, obj->center);
 	b = 2 * (vect_dot_product(cam_sp, ray));
-	c = vect_dot_product(cam_sp, cam_sp) - pow(scene->objs->radius, 2);
+	c = vect_dot_product(cam_sp, cam_sp) - pow(obj->radius, 2);
 	discr = pow(b, 2) - (4 * c);
 	free(cam_sp);
 	if (discr < 0)
@@ -40,9 +40,16 @@ static int	sphere_intersects(t_scene *scene, t_vector *ray)
 	return (dist_1 > 0);
 }
 
-int	object_intersects(t_minirt *minirt, t_vector *ray)
+int	object_intersects(t_minirt *minirt, t_object **objs, t_vector *ray)
 {
-	if (minirt->scene->objs->type == 'S')
-		return (sphere_intersects(minirt->scene, ray));
-	return (0);
+	int		i;
+
+	i = 0;
+	while (objs[i] != NULL)
+	{
+		if (objs[i]->type == 'S' && sphere_intersects(minirt->scene, objs[i], ray))
+			return (i);
+		i++;
+	}
+	return (-1);
 }

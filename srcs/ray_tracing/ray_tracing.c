@@ -6,12 +6,13 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 21:10:32 by lbaela            #+#    #+#             */
-/*   Updated: 2022/01/19 13:30:17 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/01/19 15:50:14 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <math.h>
+#include <stdio.h>
 
 #include "minirt.h"
 #include "camera.h"
@@ -53,6 +54,7 @@ void	ray_tracing(t_minirt *minirt)
 	float		x_ray;
 	t_vector	*ray;
 	t_plane		*proj;
+	int			i;
 
 	mlx_y = 0;
 	proj = get_projection_plane(WIN_WIDTH, WIN_HEIGHT,
@@ -68,8 +70,9 @@ void	ray_tracing(t_minirt *minirt)
 			x_ray = x_angle * proj->x_pix;
 			ray = new_vect(x_ray, y_ray, -1);
 			normalise_vect(ray);
-			if (object_intersects(minirt, ray))
-				my_mlx_pixel_put(minirt, mlx_x, mlx_y, minirt->scene->objs->colour);
+			i = object_intersects(minirt, minirt->scene->objs, ray);
+			if (i != -1)
+				my_mlx_pixel_put(minirt, mlx_x, mlx_y, minirt->scene->objs[i]->colour);
 			else
 				my_mlx_pixel_put(minirt, mlx_x, mlx_y, COL_YELLOW);
 			free(ray);
