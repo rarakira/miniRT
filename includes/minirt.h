@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 18:42:37 by lbaela            #+#    #+#             */
-/*   Updated: 2022/01/19 09:55:52 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/01/19 13:07:07 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 
 # define WIN_WIDTH	1200
 # define WIN_HEIGHT	800
+
+# define COL_RED		0x00D13632
+# define COL_ORANGE		0x00E2571E
+# define COL_YELLOW		0x00CDB924
+# define COL_GREEN		0x00479E1B
+# define COL_BLUE		0x001D829E
+# define COL_VIOLET		0x00503FA9
+# define COL_BLACK		0x002B2B2A
 
 typedef struct s_camera	t_camera;
 typedef struct s_object	t_object;
@@ -49,6 +57,10 @@ typedef struct s_scene
 /* scene init*/
 t_scene		*new_scene(t_camera *cam, t_object *obj);
 
+/* drawing functions */
+void		my_mlx_pixel_put(t_minirt *minirt, int x, int y, int color);
+void		fill_background(t_minirt *minirt);
+
 /* hooks */
 void		register_hooks(t_minirt *minirt);
 int			key_hook(int keycode, t_minirt *minirt);
@@ -56,6 +68,10 @@ int			key_hook(int keycode, t_minirt *minirt);
 /* error and memory handling */
 int			free_minirt(t_minirt *minirt);
 void		exit_on_error(int err, char *msg);
+
+/* ray tracing */
+void		ray_tracing(t_minirt *minirt);
+int			object_intersects(t_minirt *minirt, t_vector *ray);
 
 /* vector functions */
 t_vector	*new_vect(float x, float y, float z);

@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:38:56 by lbaela            #+#    #+#             */
-/*   Updated: 2022/01/19 09:46:16 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/01/19 12:44:27 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ t_object	*new_sphere(t_vector *center, float radius)
 	ft_memset(sphere, 0, sizeof(t_object));
 	sphere->center = center;
 	sphere->radius = radius;
+	sphere->type = 'S';
 	return (sphere);
 }

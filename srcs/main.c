@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 18:59:26 by lbaela            #+#    #+#             */
-/*   Updated: 2022/01/19 09:53:43 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/01/19 12:38:12 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,20 @@ int	free_minirt(t_minirt *minirt)
 
 void	init_minirt(t_minirt *minirt)
 {
-	minirt->scene = NULL;
+	t_vector	*sphere_c;
+	t_object	*sphere;
+	t_vector	*cam_v;
+	t_vector	*cam_dir;
+	t_camera	*cam;
+
+	sphere_c = new_vect(3, 2, -32);
+	sphere = new_sphere(sphere_c, 12 / 2);
+	cam_v = new_vect(0, 0, 0);
+	cam_dir = new_vect(0, 0, -1);
+	cam = create_camera(cam_v, cam_dir, 70);
+	minirt->scene = new_scene(cam, sphere);
+	minirt->scene->width = WIN_WIDTH;
+	minirt->scene->height = WIN_HEIGHT;
 }
 
 void	init_mlx(t_minirt *minirt)
@@ -75,7 +88,7 @@ int	main(int argc, char **argv)
 		init_minirt(&minirt);
 		init_mlx(&minirt);
 		register_hooks(&minirt);
-		// render
+		ray_tracing(&minirt);
 		mlx_put_image_to_window(minirt.mlx, minirt.win, minirt.img, 0, 0);
 		mlx_loop(minirt.mlx);
 	}

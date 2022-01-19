@@ -11,7 +11,7 @@ vectors.c)
 # OBJECTS
 OBJECT_DIR		=	objects
 OBJECTS			=	$(addprefix $(OBJECT_DIR)/, \
-sphere.c)
+sphere.c			object_intersection.c)
 # end OBJECTS
 
 # CAMERAS
@@ -26,4 +26,16 @@ HOOKS			=	$(addprefix $(HOOK_DIR)/, \
 register_hooks.c	register_hooks_utils.c)
 # end HOOKS
 
-SRCS			=	$(MAIN) $(VECTORS) $(OBJECTS) $(CAMERAS) $(HOOKS)
+# RAY_TRACING
+RAY_TRACING_DIR		=	ray_tracing
+RAY_TRACING			=	$(addprefix $(RAY_TRACING_DIR)/, \
+ray_tracing.c)
+# end RAY_TRACING
+
+# DRAWING
+DRAWING_DIR		=	draw_pixels
+DRAWING			=	$(addprefix $(DRAWING_DIR)/, \
+draw_pixels.c)
+# end DRAWING
+
+SRCS			=	$(MAIN) $(VECTORS) $(OBJECTS) $(CAMERAS) $(HOOKS) $(RAY_TRACING) $(DRAWING)
