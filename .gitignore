@@ -1,3 +1,7 @@
+#miniRT files
+.vscode/
+miniRT
+
 # Prerequisites
 *.d
 
