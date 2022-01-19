@@ -6,18 +6,35 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:02:01 by lbaela            #+#    #+#             */
-/*   Updated: 2022/01/19 15:49:53 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/01/19 17:24:30 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "minirt.h"
 #include "camera.h"
 #include "objects.h"
 
-static int	sphere_intersects(t_scene *scene, t_object *obj, t_vector *ray)
+static float	plane_intersects(t_scene *scene, t_object *obj, t_vector *ray)
+{
+	(void) scene;
+	(void) obj;
+	(void) ray;
+	return (0);
+}
+
+static float	cyllinder_intersects(t_scene *scene, t_object *obj, t_vector *ray)
+{
+	(void) scene;
+	(void) obj;
+	(void) ray;
+	return (0);
+}
+
+static float	sphere_intersects(t_scene *scene, t_object *obj, t_vector *ray)
 {
 	float		b;
 	float		c;
@@ -36,20 +53,37 @@ static int	sphere_intersects(t_scene *scene, t_object *obj, t_vector *ray)
 	if (discr < 0)
 		return (0);
 	dist_1 = ((b * (-1)) - (sqrt(discr) / 2));
-	dist_2 = ((b * (-1)) + (sqrt(discr) / 2)); // for later
-	return (dist_1 > 0);
+	dist_2 = ((b * (-1)) + (sqrt(discr) / 2));
+	if (dist_1 > 0)
+		return (dist_1);
+	else if (dist_2 > 0) // check later
+		return (dist_2);
+	return (0);
 }
 
 int	object_intersects(t_minirt *minirt, t_object **objs, t_vector *ray)
 {
-	int		i;
+	int			i;
+	float		res1;
+	float		res2[2];
 
 	i = 0;
+	res2[0] = -1;
+	res2[1] = -1;
 	while (objs[i] != NULL)
 	{
-		if (objs[i]->type == 'S' && sphere_intersects(minirt->scene, objs[i], ray))
-			return (i);
+		if (objs[i]->type == 'S')
+			res1 = sphere_intersects(minirt->scene, objs[i], ray);
+		else if (objs[i]->type == 'C')
+			res1 = cyllinder_intersects(minirt->scene, objs[i], ray);
+		else if (objs[i]->type == 'P')
+			res1 = plane_intersects(minirt->scene, objs[i], ray);
+		if (res1 != 0 && (res2[1] == -1 || res1 < res2[1]))
+		{
+			res2[0] = i;
+			res2[1] = res1;
+		}
 		i++;
 	}
-	return (-1);
+	return (res2[0]);
 }

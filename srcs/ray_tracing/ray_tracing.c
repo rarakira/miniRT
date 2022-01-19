@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 21:10:32 by lbaela            #+#    #+#             */
-/*   Updated: 2022/01/19 15:50:14 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/01/19 16:18:01 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	ray_tracing(t_minirt *minirt)
 			if (i != -1)
 				my_mlx_pixel_put(minirt, mlx_x, mlx_y, minirt->scene->objs[i]->colour);
 			else
-				my_mlx_pixel_put(minirt, mlx_x, mlx_y, COL_YELLOW);
+				my_mlx_pixel_put(minirt, mlx_x, mlx_y, COL_BLACK);
 			free(ray);
 			mlx_x++;
 			x_angle++;
