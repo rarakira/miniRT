@@ -6,11 +6,12 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 21:10:32 by lbaela            #+#    #+#             */
-/*   Updated: 2022/01/19 13:21:55 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/01/19 13:30:17 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <math.h>
 
 #include "minirt.h"
 #include "camera.h"
@@ -30,12 +31,12 @@ t_plane	*get_projection_plane(float scene_w, float scene_h, float angle)
 	t_plane	*proj;
 	float	ratio;
 
-	(void) angle;
 	proj = malloc(sizeof(t_plane));
 	if (proj == NULL)
 		exit_on_error(-1, ERR_MALLOC);
 	ratio = scene_w / scene_h;
-	proj->w = 1;
+	proj->w = tan(angle / 2 * (M_PI / 180));
+	proj->w *= 2;
 	proj->h = proj->w / ratio;
 	proj->x_pix = proj->w / scene_w;
 	proj->y_pix = proj->h / scene_h;
