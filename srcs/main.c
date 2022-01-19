@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 18:59:26 by lbaela            #+#    #+#             */
-/*   Updated: 2022/01/19 17:18:53 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/01/19 17:31:52 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,23 @@ void	init_minirt(t_minirt *minirt)
 	t_vector	*cam_v;
 	t_vector	*cam_dir;
 	t_camera	*cam;
-	int			n_obj = 2;
+	int			n_obj = 3;
 
 	cam_v = new_vect(0, 0, 0);
 	cam_dir = new_vect(0, 0, -1);
 	cam = create_camera(cam_v, cam_dir, 70);
 	minirt->scene = new_scene(cam, n_obj);
-	/* add 2 spheres for test */
+	/* add 'n_obj' spheres for test */
+	n_obj = 0;
 	sphere_c = new_vect(3, 2, -32);
 	sphere = new_sphere(sphere_c, 12 / 2, COL_VIOLET);
-	minirt->scene->objs[0] = sphere;
+	minirt->scene->objs[n_obj++] = sphere;
 	sphere_c = new_vect(-5, -2, -33);
 	sphere = new_sphere(sphere_c, 14 / 2, COL_BLUE);
-	minirt->scene->objs[1] = sphere;
+	minirt->scene->objs[n_obj++] = sphere;
+	sphere_c = new_vect(1, -5, -30.5);
+	sphere = new_sphere(sphere_c, 6 / 2, COL_YELLOW);
+	minirt->scene->objs[n_obj++] = sphere;
 	minirt->scene->objs[n_obj] = NULL;
 	/* add spheres end */
 	minirt->scene->width = WIN_WIDTH;
