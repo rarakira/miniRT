@@ -1,0 +1,29 @@
+# MAIN
+MAIN			=	main.c error_exit.c
+# end MAIN
+
+# VECTORS
+VECTOR_DIR		=	vectors
+VECTORS			=	$(addprefix $(VECTOR_DIR)/, \
+vectors.c)
+# end VECTORS
+
+# OBJECTS
+OBJECT_DIR		=	objects
+OBJECTS			=	$(addprefix $(OBJECT_DIR)/, \
+sphere.c)
+# end OBJECTS
+
+# CAMERAS
+CAMERA_DIR		=	cameras
+CAMERAS			=	$(addprefix $(CAMERA_DIR)/, \
+cameras.c)
+# end CAMERAS
+
+# HOOKS
+HOOK_DIR		=	hooks
+HOOKS			=	$(addprefix $(HOOK_DIR)/, \
+register_hooks.c	register_hooks_utils.c)
+# end HOOKS
+
+SRCS			=	$(MAIN) $(VECTORS) $(OBJECTS) $(CAMERAS) $(HOOKS)
