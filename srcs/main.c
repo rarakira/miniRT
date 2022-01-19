@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 18:59:26 by lbaela            #+#    #+#             */
-/*   Updated: 2022/01/19 12:38:12 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/01/19 13:20:05 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	init_minirt(t_minirt *minirt)
 	t_camera	*cam;
 
 	sphere_c = new_vect(3, 2, -32);
-	sphere = new_sphere(sphere_c, 12 / 2);
+	sphere = new_sphere(sphere_c, 12 / 2, COL_RED);
 	cam_v = new_vect(0, 0, 0);
 	cam_dir = new_vect(0, 0, -1);
 	cam = create_camera(cam_v, cam_dir, 70);

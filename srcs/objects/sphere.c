@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:38:56 by lbaela            #+#    #+#             */
-/*   Updated: 2022/01/19 12:44:27 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/01/19 13:20:28 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "objects.h"
 #include "error_msgs.h"
 
-t_object	*new_sphere(t_vector *center, float radius)
+t_object	*new_sphere(t_vector *center, float radius, int colour)
 {
 	t_object	*sphere;
 
@@ -28,5 +28,6 @@ t_object	*new_sphere(t_vector *center, float radius)
 	sphere->center = center;
 	sphere->radius = radius;
 	sphere->type = 'S';
+	sphere->colour = colour;
 	return (sphere);
 }

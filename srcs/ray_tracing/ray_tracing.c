@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 21:10:32 by lbaela            #+#    #+#             */
-/*   Updated: 2022/01/19 13:06:42 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/01/19 13:21:55 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "minirt.h"
 #include "camera.h"
 #include "error_msgs.h"
+#include "objects.h"
 
 typedef struct s_plane
 {
@@ -67,7 +68,7 @@ void	ray_tracing(t_minirt *minirt)
 			ray = new_vect(x_ray, y_ray, -1);
 			normalise_vect(ray);
 			if (object_intersects(minirt, ray))
-				my_mlx_pixel_put(minirt, mlx_x, mlx_y, COL_RED);
+				my_mlx_pixel_put(minirt, mlx_x, mlx_y, minirt->scene->objs->colour);
 			else
 				my_mlx_pixel_put(minirt, mlx_x, mlx_y, COL_YELLOW);
 			free(ray);

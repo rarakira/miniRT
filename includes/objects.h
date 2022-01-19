@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:30:24 by lbaela            #+#    #+#             */
-/*   Updated: 2022/01/18 21:04:27 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/01/19 13:20:58 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ typedef struct s_object
 	t_vector	*norm_v;
 	float		radius;
 	float		height;
+	int			colour;
 }				t_object;
 
-t_object	*new_sphere(t_vector *center, float radius);
+t_object		*new_sphere(t_vector *center, float radius, int colour);
 
 #endif
