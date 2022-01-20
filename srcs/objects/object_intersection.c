@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:02:01 by lbaela            #+#    #+#             */
-/*   Updated: 2022/01/19 17:24:30 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/01/20 16:23:26 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,23 @@
 #include "camera.h"
 #include "objects.h"
 
-static float	plane_intersects(t_scene *scene, t_object *obj, t_vector *ray)
+static float	plane_intersects(t_camera *cam, t_object *obj, t_vector *ray)
 {
-	(void) scene;
+	(void) cam;
 	(void) obj;
 	(void) ray;
 	return (0);
 }
 
-static float	cyllinder_intersects(t_scene *scene, t_object *obj, t_vector *ray)
+static float	cyllinder_intersects(t_camera *cam, t_object *obj, t_vector *ray)
 {
-	(void) scene;
+	(void) cam;
 	(void) obj;
 	(void) ray;
 	return (0);
 }
 
-static float	sphere_intersects(t_scene *scene, t_object *obj, t_vector *ray)
+static float	sphere_intersects(t_camera *cam, t_object *obj, t_vector *ray)
 {
 	float		b;
 	float		c;
@@ -45,7 +45,7 @@ static float	sphere_intersects(t_scene *scene, t_object *obj, t_vector *ray)
 
 	dist_1 = 0;
 	dist_2 = 0;
-	cam_sp = vect_substract(scene->cams->origin, obj->center);
+	cam_sp = vect_substract(cam->origin, obj->center);
 	b = 2 * (vect_dot_product(cam_sp, ray));
 	c = vect_dot_product(cam_sp, cam_sp) - pow(obj->radius, 2);
 	discr = pow(b, 2) - (4 * c);
@@ -73,11 +73,11 @@ int	object_intersects(t_minirt *minirt, t_object **objs, t_vector *ray)
 	while (objs[i] != NULL)
 	{
 		if (objs[i]->type == 'S')
-			res1 = sphere_intersects(minirt->scene, objs[i], ray);
+			res1 = sphere_intersects(minirt->cam, objs[i], ray);
 		else if (objs[i]->type == 'C')
-			res1 = cyllinder_intersects(minirt->scene, objs[i], ray);
+			res1 = cyllinder_intersects(minirt->cam, objs[i], ray);
 		else if (objs[i]->type == 'P')
-			res1 = plane_intersects(minirt->scene, objs[i], ray);
+			res1 = plane_intersects(minirt->cam, objs[i], ray);
 		if (res1 != 0 && (res2[1] == -1 || res1 < res2[1]))
 		{
 			res2[0] = i;

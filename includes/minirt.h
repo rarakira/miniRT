@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 18:42:37 by lbaela            #+#    #+#             */
-/*   Updated: 2022/01/19 15:47:10 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/01/20 16:23:26 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ typedef struct s_minirt {
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
-	t_scene		*scene;
+	t_camera	*cam;
+	t_object	**objs;
 }				t_minirt;
 
 typedef struct s_vector
@@ -45,17 +46,6 @@ typedef struct s_vector
 	float	y;
 	float	z;
 }				t_vector;
-
-typedef struct s_scene
-{
-	t_camera	*cams;
-	t_object	**objs;
-	float		width;
-	float		height;
-}				t_scene;
-
-/* scene init*/
-t_scene		*new_scene(t_camera *cam, int n_objects);
 
 /* drawing functions */
 void		my_mlx_pixel_put(t_minirt *minirt, int x, int y, int color);

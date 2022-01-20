@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 18:59:26 by lbaela            #+#    #+#             */
-/*   Updated: 2022/01/19 17:31:52 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/01/20 16:36:41 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,63 +20,51 @@
 #include "error_msgs.h"
 #include "ft_printf.h"
 
-t_scene	*new_scene(t_camera *cam, int n_objects)
-{
-	t_scene		*scene;
-	t_object	**objects;
-
-	scene = malloc(sizeof(t_scene));
-	objects = malloc(sizeof(t_object *) * (n_objects + 1));
-	if (cam == NULL || objects == NULL)
-		exit_on_error(-1, ERR_MALLOC);
-	ft_memset(scene, 0, sizeof(t_scene));
-	scene->cams = cam;
-	scene->objs = malloc(sizeof(t_object));
-	return (scene);
-}
-
 int	free_minirt(t_minirt *minirt)
 {
-	if (minirt->scene)
-	{
-		free(minirt->scene->cams);
-		free(minirt->scene->objs);
-	}
-	free(minirt->scene);
+	int		i;
+
+	i = 0;
+	free(minirt->cam);
+	while (minirt->objs[i])
+		free(minirt->objs[i++]);
+	free(minirt->objs);
 	return (1);
 }
 
-void	init_minirt(t_minirt *minirt)
+static inline void	init_scene(t_minirt *minirt)
 {
 	t_vector	*sphere_c;
 	t_object	*sphere;
 	t_vector	*cam_v;
 	t_vector	*cam_dir;
-	t_camera	*cam;
-	int			n_obj = 3;
+	int			n_obj = 4;
 
 	cam_v = new_vect(0, 0, 0);
 	cam_dir = new_vect(0, 0, -1);
-	cam = create_camera(cam_v, cam_dir, 70);
-	minirt->scene = new_scene(cam, n_obj);
+	minirt->cam = create_camera(cam_v, cam_dir, 70);
+	minirt->objs = malloc(sizeof(t_object *) * (n_obj + 1));
+	if (minirt->objs == NULL || minirt->cam == NULL)
+		exit_on_error(-1, ERR_MALLOC);
 	/* add 'n_obj' spheres for test */
 	n_obj = 0;
-	sphere_c = new_vect(3, 2, -32);
+	sphere_c = new_vect(3, 6, -32);
 	sphere = new_sphere(sphere_c, 12 / 2, COL_VIOLET);
-	minirt->scene->objs[n_obj++] = sphere;
-	sphere_c = new_vect(-5, -2, -33);
+	minirt->objs[n_obj++] = sphere;
+	sphere_c = new_vect(-5, 4, -33);
 	sphere = new_sphere(sphere_c, 14 / 2, COL_BLUE);
-	minirt->scene->objs[n_obj++] = sphere;
-	sphere_c = new_vect(1, -5, -30.5);
+	minirt->objs[n_obj++] = sphere;
+	sphere_c = new_vect(6.5, -5.5, -30.5);
 	sphere = new_sphere(sphere_c, 6 / 2, COL_YELLOW);
-	minirt->scene->objs[n_obj++] = sphere;
-	minirt->scene->objs[n_obj] = NULL;
+	minirt->objs[n_obj++] = sphere;
+	sphere_c = new_vect(2, -3, -34);
+	sphere = new_sphere(sphere_c, 16 / 2, COL_RED);
+	minirt->objs[n_obj++] = sphere;
+	minirt->objs[n_obj] = NULL;
 	/* add spheres end */
-	minirt->scene->width = WIN_WIDTH;
-	minirt->scene->height = WIN_HEIGHT;
 }
 
-void	init_mlx(t_minirt *minirt)
+static inline void	init_mlx(t_minirt *minirt)
 {
 	minirt->mlx = mlx_init();
 	if (!minirt->mlx && free_minirt(minirt))
@@ -99,7 +87,7 @@ int	main(int argc, char **argv)
 	if (argc == 2)
 	{
 		// parse
-		init_minirt(&minirt);
+		init_scene(&minirt);
 		init_mlx(&minirt);
 		register_hooks(&minirt);
 		ray_tracing(&minirt);

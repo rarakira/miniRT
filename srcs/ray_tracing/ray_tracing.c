@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 21:10:32 by lbaela            #+#    #+#             */
-/*   Updated: 2022/01/19 16:18:01 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/01/20 16:23:26 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,21 +58,21 @@ void	ray_tracing(t_minirt *minirt)
 
 	mlx_y = 0;
 	proj = get_projection_plane(WIN_WIDTH, WIN_HEIGHT,
-			minirt->scene->cams->angle);
-	y_angle = (minirt->scene->height / 2);
-	while (y_angle >= (minirt->scene->height / 2) * -1)
+			minirt->cam->angle);
+	y_angle = (WIN_HEIGHT / 2);
+	while (y_angle >= (WIN_HEIGHT / 2) * -1)
 	{
 		mlx_x = 0;
 		y_ray = y_angle * proj->y_pix;
-		x_angle = (minirt->scene->width / 2) * -1;
-		while (x_angle <= (minirt->scene->width / 2))
+		x_angle = (WIN_WIDTH / 2) * -1;
+		while (x_angle <= (WIN_WIDTH / 2))
 		{
 			x_ray = x_angle * proj->x_pix;
 			ray = new_vect(x_ray, y_ray, -1);
 			normalise_vect(ray);
-			i = object_intersects(minirt, minirt->scene->objs, ray);
+			i = object_intersects(minirt, minirt->objs, ray);
 			if (i != -1)
-				my_mlx_pixel_put(minirt, mlx_x, mlx_y, minirt->scene->objs[i]->colour);
+				my_mlx_pixel_put(minirt, mlx_x, mlx_y, minirt->objs[i]->colour);
 			else
 				my_mlx_pixel_put(minirt, mlx_x, mlx_y, COL_BLACK);
 			free(ray);
