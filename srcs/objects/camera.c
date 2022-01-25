@@ -3,7 +3,6 @@
 #include <stdlib.h>
 
 #include "../../includes/minirt.h"
-#include "../../includes/camera.h"
 #include "../../includes/parsing.h"
 #include "../../includes/error_msgs.h"
 
@@ -22,6 +21,7 @@
 
 void	ft_free_camera(t_minirt *minirt)
 {
+	free(minirt->ambient);
 	if (minirt->camera)
 	{
 		if (minirt->camera->origin)

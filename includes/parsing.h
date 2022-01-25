@@ -7,7 +7,6 @@
 
 #include "../libs/libft/libft.h"
 #include "minirt.h"
-#include "camera.h"
 #include "objects.h"
 #include "error_msgs.h"
 

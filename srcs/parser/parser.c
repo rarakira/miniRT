@@ -61,6 +61,8 @@ static void ft_parse_objects(t_minirt *minirt, char *line)
 		ft_read_ambient(minirt, line);
 	if (line[i] == 'C' && line [i + 1] == ' ')
 		ft_read_camera(minirt, line);
+	if (line[i] == 'L' && line [i + 1] == ' ')
+		ft_read_light(minirt, line);
 	printf("%s\n", line);
 }
 

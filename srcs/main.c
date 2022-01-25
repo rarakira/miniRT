@@ -16,7 +16,6 @@
 #include "../libs/minilibx_macos/mlx.h"
 #include "../libs/libft/libft.h"
 #include "../includes/minirt.h"
-#include "../includes/camera.h"
 #include "../includes/parsing.h"
 #include "../includes/objects.h"
 #include "../includes/error_msgs.h"
@@ -107,6 +106,7 @@ int	main(int argc, char **argv)
 		return (ERROR_FILE_OPEN);
 	}
 	//init minirt;
+	ft_init_light(&minirt);
 	ft_init_ambient(&minirt);
 	ft_init_camera(&minirt);
 	// parse

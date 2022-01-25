@@ -32,6 +32,8 @@
 #define ERROR_MALLOC_CAMERA 4
 #define ERROR_MALLOC_CAMERA_ORIGIN 5
 #define ERROR_MALLOC_CAMERA_DIRECTION 6
+#define ERROR_MALLOC_LIGHT 7
+#define ERROR_MALLOC_LIGHT_ORIGIN 8
 
 #define ERROR_MALLOC "Error\nMemory allocation failed\n"
 

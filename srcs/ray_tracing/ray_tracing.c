@@ -14,10 +14,9 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "minirt.h"
-#include "camera.h"
-#include "error_msgs.h"
-#include "objects.h"
+#include "../../includes/minirt.h"
+#include "../../includes/error_msgs.h"
+#include "../../includes/objects.h"
 
 typedef struct s_plane
 {

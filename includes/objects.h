@@ -27,14 +27,20 @@ typedef struct s_ambient
 	int		colour;
 } t_ambient;
 
+typedef struct s_camera
+{
+	t_vector	*origin;
+	t_vector	*direction;
+	float		angle;
+}				t_camera;
+
 typedef struct s_light
 {
 	t_vector	*point;
-	float		brightness; // [0.0,1.0]
+	float		brightness_ratio; // [0.0,1.0]
+	t_rgb		rgb; // rgb -> hex conversion
 	int 		colour;
 } t_light;
-
-typedef struct s_vector	t_vector;
 
 /*
 Types in *CAPITAL*:
@@ -54,6 +60,11 @@ typedef struct s_object
 
 void	ft_init_ambient(t_minirt *minirt);
 void	ft_read_ambient(t_minirt *minirt, char *line);
+void	ft_init_camera(t_minirt *minirt);
+void	ft_read_camera(t_minirt *minirt, char *line);
+void	ft_free_camera(t_minirt *minirt);
+void	ft_init_light(t_minirt *minirt);
+void	ft_read_light(t_minirt *minirt, char *line);
 t_object		*new_sphere(t_vector *center, float radius, int colour);
 
 #endif

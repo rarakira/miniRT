@@ -13,7 +13,7 @@ static void	ft_print_ambient(t_minirt *minirt)
 {
 		printf("\033[35m\n########## AMBIENT ##########\n");
 		printf("[RATIO] %f\n", minirt->ambient->lighting_ratio);
-		printf("[COLOR] r: %d, g: %d, b: %d\n",
+		printf("[RGB] r: %d, g: %d, b: %d\n",
 			   minirt->ambient->rgb.r,
 			   minirt->ambient->rgb.g,
 			   minirt->ambient->rgb.b);
@@ -27,7 +27,6 @@ void	ft_init_ambient(t_minirt *minirt)
 	if (!minirt->ambient)
 	{
 		write(2, ERROR_MALLOC, ft_strlen(ERROR_MALLOC));
-		ft_free_camera(minirt);
 		exit(ERROR_MALLOC_AMBIENT);
 	}
 }

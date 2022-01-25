@@ -14,9 +14,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "minirt.h"
-#include "camera.h"
-#include "objects.h"
+#include "../../includes/minirt.h"
+#include "../../includes/objects.h"
 
 static float	plane_intersects(t_camera *cam, t_object *obj, t_vector *ray)
 {
