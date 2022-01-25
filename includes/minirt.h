@@ -1,0 +1,76 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minirt.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/18 18:42:37 by lbaela            #+#    #+#             */
+/*   Updated: 2022/01/20 16:23:26 by lbaela           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef MINIRT_H
+# define MINIRT_H
+
+# define WIN_WIDTH	1200
+# define WIN_HEIGHT	800
+
+# define COL_RED		0x00D13632
+# define COL_ORANGE		0x00E2571E
+# define COL_YELLOW		0x00CDB924
+# define COL_GREEN		0x00479E1B
+# define COL_BLUE		0x001D829E
+# define COL_VIOLET		0x00503FA9
+# define COL_BLACK		0x002B2B2A
+
+typedef struct s_ambient t_ambient;
+typedef struct s_camera	t_camera;
+typedef struct s_object	t_object;
+typedef struct s_scene	t_scene;
+
+typedef struct s_minirt {
+	void		*mlx;
+	void		*win;
+	void		*img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+
+	t_ambient	*ambient;
+	t_camera	*camera;
+	t_object	**objs;
+}				t_minirt;
+
+typedef struct s_vector
+{
+	float	x;
+	float	y;
+	float	z;
+}				t_vector;
+
+/* drawing functions */
+void		my_mlx_pixel_put(t_minirt *minirt, int x, int y, int color);
+void		fill_background(t_minirt *minirt);
+
+/* hooks */
+void		register_hooks(t_minirt *minirt);
+int			key_hook(int keycode, t_minirt *minirt);
+
+/* error and memory handling */
+int			free_minirt(t_minirt *minirt);
+void		exit_on_error(int err, char *msg);
+
+/* ray tracing */
+void		ray_tracing(t_minirt *minirt);
+int			object_intersects(t_minirt *minirt, t_object **obj, t_vector *ray);
+
+/* vector functions */
+t_vector	*new_vect(float x, float y, float z);
+t_vector	*vect_substract(t_vector *v1, t_vector *v2);
+float		vect_len(t_vector *vect);
+void		normalise_vect(t_vector *vect);
+float		vect_dot_product(t_vector *v1, t_vector *v2);
+
+#endif
