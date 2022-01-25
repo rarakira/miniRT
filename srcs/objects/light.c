@@ -20,6 +20,7 @@ void	ft_print_light(t_minirt *minirt)
 		   minirt->light->rgb.r,
 		   minirt->light->rgb.g,
 		   minirt->light->rgb.b);
+	printf("[COLOR] %X\n", minirt->light->colour);
 	printf("---------- ----- ----------\n"COLOR_END);
 }
 
@@ -67,6 +68,7 @@ void	ft_read_light(t_minirt *minirt, char *line)
 	while (ft_isdigit(line[i]))
 		i++;
 	minirt->light->rgb.b = ft_atoi(&line[++i]);
+	minirt->light->colour = ft_rgb_hex(0, minirt->light->rgb);
 //	printf("[RATIO] %f\n", minirt->ambient->lighting_ratio);
 //	printf("[COLOR] r: %d, g: %d, b: %d\n", r, g, b);
 //	minirt->ambient->colour = fl_rgb_hex(r, g, b);

@@ -27,15 +27,10 @@ int ft_max_strlen(char *file_name)
 	return (max_strlen);
 }
 
-//int fl_rgb_hex(int r, int g, int b)
-//{
-//	int figure_color;
-//
-//	figure_color = 0;
-//	r = (figure_color & (0xFF << 16)) >> 16;
-//	g = (figure_color & (0xFF << 8)) >> 8;
-//	b = figure_color & 0xFF;
-//}
+int	ft_rgb_hex(int t, t_rgb rgb)
+{
+	return (t << 24 | rgb.r << 16 | rgb.g << 8 | rgb.b);
+}
 
 static char *ft_create_line(char *file_name)
 {

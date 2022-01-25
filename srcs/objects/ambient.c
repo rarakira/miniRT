@@ -17,6 +17,7 @@ static void	ft_print_ambient(t_minirt *minirt)
 			   minirt->ambient->rgb.r,
 			   minirt->ambient->rgb.g,
 			   minirt->ambient->rgb.b);
+		printf("[COLOR] %X\n", minirt->ambient->colour);
 		printf("---------- ------- ----------\n"COLOR_END);
 
 }
@@ -48,7 +49,7 @@ void	ft_read_ambient(t_minirt *minirt, char *line)
 	while (ft_isdigit(line[i]))
 		i++;
 	minirt->ambient->rgb.b = ft_atoi(&line[++i]);
-
+	minirt->ambient->colour = ft_rgb_hex(0, minirt->ambient->rgb);
 //	printf("[RATIO] %f\n", minirt->ambient->lighting_ratio);
 //	printf("[COLOR] r: %d, g: %d, b: %d\n", r, g, b);
 //	minirt->ambient->colour = fl_rgb_hex(r, g, b);

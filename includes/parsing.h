@@ -100,6 +100,6 @@
 
 void	ft_parsing(char *file_name, t_minirt *minirt);
 float	ft_atof(char *line, int *i);
-int		fl_rgb_hex(int r, int g, int b);
+int	ft_rgb_hex(int t, t_rgb rgb);
 
 #endif
