@@ -5,7 +5,7 @@
 #ifndef PARSING_H
 #define PARSING_H
 
-#include "libft.h"
+#include "../libs/libft/libft.h"
 #include "minirt.h"
 #include "camera.h"
 #include "objects.h"

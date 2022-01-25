@@ -5,18 +5,18 @@
 
 #include <stdlib.h>
 
-#include "minirt.h"
-#include "parsing.h"
-#include "objects.h"
+#include "../../includes/minirt.h"
+#include "../../includes/parsing.h"
+#include "../../includes/objects.h"
 
-void	ft_print_ambient(t_minirt *minirt)
+static void	ft_print_ambient(t_minirt *minirt)
 {
 		printf("\033[35m\n########## AMBIENT ##########\n");
 		printf("[RATIO] %f\n", minirt->ambient->lighting_ratio);
 		printf("[COLOR] r: %d, g: %d, b: %d\n",
-			   minirt->ambient->colour.r,
-			   minirt->ambient->colour.g,
-			   minirt->ambient->colour.b);
+			   minirt->ambient->rgb.r,
+			   minirt->ambient->rgb.g,
+			   minirt->ambient->rgb.b);
 		printf("---------- ------- ----------\n"COLOR_END);
 
 }
@@ -42,13 +42,13 @@ void	ft_read_ambient(t_minirt *minirt, char *line)
 	minirt->ambient->lighting_ratio = ft_atof(line, &i);
 	while (line[i] == ' ')
 		i++;
-	minirt->ambient->colour.r = ft_atoi(&line[i]);
+	minirt->ambient->rgb.r = ft_atoi(&line[i]);
 	while (ft_isdigit(line[i]))
 		i++;
-	minirt->ambient->colour.g = ft_atoi(&line[++i]);
+	minirt->ambient->rgb.g = ft_atoi(&line[++i]);
 	while (ft_isdigit(line[i]))
 		i++;
-	minirt->ambient->colour.b = ft_atoi(&line[++i]);
+	minirt->ambient->rgb.b = ft_atoi(&line[++i]);
 
 //	printf("[RATIO] %f\n", minirt->ambient->lighting_ratio);
 //	printf("[COLOR] r: %d, g: %d, b: %d\n", r, g, b);

@@ -13,14 +13,13 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-#include "mlx.h"
-#include "libft.h"
-#include "minirt.h"
-#include "camera.h"
-#include "parsing.h"
-#include "objects.h"
-#include "error_msgs.h"
-#include "ft_printf.h"
+#include "../libs/minilibx_macos/mlx.h"
+#include "../libs/libft/libft.h"
+#include "../includes/minirt.h"
+#include "../includes/camera.h"
+#include "../includes/parsing.h"
+#include "../includes/objects.h"
+#include "../includes/error_msgs.h"
 
 # define COLOR_ERROR "\033[31m"
 # define COLOR_OK "\033[32m"

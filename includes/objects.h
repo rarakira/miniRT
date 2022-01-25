@@ -23,8 +23,16 @@ typedef struct s_rgb
 typedef struct s_ambient
 {
 	float	lighting_ratio; // [0.0,1.0]
-	t_rgb 	colour; // rgb -> hex conversion
+	t_rgb 	rgb; // rgb -> hex conversion
+	int		colour;
 } t_ambient;
+
+typedef struct s_light
+{
+	t_vector	*point;
+	float		brightness; // [0.0,1.0]
+	int 		colour;
+} t_light;
 
 typedef struct s_vector	t_vector;
 

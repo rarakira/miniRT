@@ -2,10 +2,10 @@
 
 #include <stdlib.h>
 
-#include "minirt.h"
-#include "camera.h"
-#include "parsing.h"
-#include "error_msgs.h"
+#include "../../includes/minirt.h"
+#include "../../includes/camera.h"
+#include "../../includes/parsing.h"
+#include "../../includes/error_msgs.h"
 
 //t_camera	*create_camera(t_vector *org, t_vector *dir, float angle)
 //{
