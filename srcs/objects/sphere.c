@@ -34,7 +34,7 @@ void	ft_read_sphere(t_minirt *minirt, char *line)
 {
 	int	i;
 
-	i = 3;
+	i = 2;
 	minirt->objs_lst->type = 'S';
 	while (line[i] == ' ')
 		i++;
