@@ -53,6 +53,7 @@ typedef struct s_object
 	t_vector	*norm_v;
 	float		radius;
 	float		height;
+	t_rgb		rgb; // rgb -> hex conversion
 	int			colour;
 	struct s_object *next;
 	struct s_object *previous;
@@ -65,6 +66,9 @@ void	ft_read_camera(t_minirt *minirt, char *line);
 void	ft_free_camera(t_minirt *minirt);
 void	ft_init_light(t_minirt *minirt);
 void	ft_read_light(t_minirt *minirt, char *line);
+void	ft_init_objs_list(t_minirt *minirt);
+void	ft_read_sphere(t_minirt *minirt, char *line);
+void	ft_add_obj_to_lst(t_minirt *minirt, char *line);
 t_object		*new_sphere(t_vector *center, float radius, int colour);
 
 #endif

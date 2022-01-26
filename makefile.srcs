@@ -22,6 +22,7 @@ OBJECTS			=	$(addprefix $(OBJECT_DIR)/, \
                     camera.c \
                     light.c \
                     sphere.c \
+                    object.c \
                     object_intersection.c)
 # end OBJECTS
 

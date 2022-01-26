@@ -42,6 +42,7 @@ typedef struct s_minirt {
 	t_ambient	*ambient;
 	t_camera	*camera;
 	t_light		*light;
+	t_object	*objs_lst;
 	t_object	**objs;
 }				t_minirt;
 

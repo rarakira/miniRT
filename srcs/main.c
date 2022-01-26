@@ -40,37 +40,38 @@ int	free_minirt(t_minirt *minirt)
 	return (1);
 }
 
-static inline void	init_scene(t_minirt *minirt)
-{
-	t_vector	*sphere_c;
-	t_object	*sphere;
-//	t_vector	*cam_v;
-//	t_vector	*cam_dir;
-	int			n_obj = 4;
 
-//	cam_v = new_vect(0, 0, 0);
-//	cam_dir = new_vect(0, 0, -1);
-//	minirt->camera = create_camera(cam_v, cam_dir, 70);
-	minirt->objs = malloc(sizeof(t_object *) * (n_obj + 1));
-	if (minirt->objs == NULL || minirt->camera == NULL)
-		exit_on_error(-1, ERR_MALLOC);
-	/* add 'n_obj' spheres for test */
-	n_obj = 0;
-	sphere_c = new_vect(3, 6, -32);
-	sphere = new_sphere(sphere_c, 12 / 2, COL_VIOLET);
-	minirt->objs[n_obj++] = sphere;
-	sphere_c = new_vect(-5, 4, -33);
-	sphere = new_sphere(sphere_c, 14 / 2, COL_BLUE);
-	minirt->objs[n_obj++] = sphere;
-	sphere_c = new_vect(6.5, -5.5, -30.5);
-	sphere = new_sphere(sphere_c, 6 / 2, COL_YELLOW);
-	minirt->objs[n_obj++] = sphere;
-	sphere_c = new_vect(2, -3, -34);
-	sphere = new_sphere(sphere_c, 16 / 2, COL_RED);
-	minirt->objs[n_obj++] = sphere;
-	minirt->objs[n_obj] = NULL;
-	/* add spheres end */
-}
+//static inline void	init_scene(t_minirt *minirt)
+//{
+//	t_vector	*sphere_c;
+//	t_object	*sphere;
+////	t_vector	*cam_v;
+////	t_vector	*cam_dir;
+//	int			n_obj = 4;
+//
+////	cam_v = new_vect(0, 0, 0);
+////	cam_dir = new_vect(0, 0, -1);
+////	minirt->camera = create_camera(cam_v, cam_dir, 70);
+//	minirt->objs = malloc(sizeof(t_object *) * (n_obj + 1));
+//	if (minirt->objs == NULL || minirt->camera == NULL)
+//		exit_on_error(-1, ERR_MALLOC);
+//	/* add 'n_obj' spheres for test */
+//	n_obj = 0;
+//	sphere_c = new_vect(3, 6, -32);
+//	sphere = new_sphere(sphere_c, 12 / 2, COL_VIOLET);
+//	minirt->objs[n_obj++] = sphere;
+//	sphere_c = new_vect(-5, 4, -33);
+//	sphere = new_sphere(sphere_c, 14 / 2, COL_BLUE);
+//	minirt->objs[n_obj++] = sphere;
+//	sphere_c = new_vect(6.5, -5.5, -30.5);
+//	sphere = new_sphere(sphere_c, 6 / 2, COL_YELLOW);
+//	minirt->objs[n_obj++] = sphere;
+//	sphere_c = new_vect(2, -3, -34);
+//	sphere = new_sphere(sphere_c, 16 / 2, COL_RED);
+//	minirt->objs[n_obj++] = sphere;
+//	minirt->objs[n_obj] = NULL;
+//	/* add spheres end */
+//}
 
 static inline void	init_mlx(t_minirt *minirt)
 {
@@ -109,11 +110,12 @@ int	main(int argc, char **argv)
 	ft_init_light(&minirt);
 	ft_init_ambient(&minirt);
 	ft_init_camera(&minirt);
+	minirt.objs_lst = 0;
 	// parse
 	ft_parsing(argv[1], &minirt);
 	printf(COLOR_OK"OK\n"COLOR_END);
 	//end parsing
-	init_scene(&minirt);
+//	init_scene(&minirt);
 	init_mlx(&minirt);
 	register_hooks(&minirt);
 	ray_tracing(&minirt);

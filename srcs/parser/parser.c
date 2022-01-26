@@ -52,13 +52,90 @@ static void ft_parse_objects(t_minirt *minirt, char *line)
 	i = 0;
 	while (line[i] == ' ')
 		i++;
-	if (line[i] == 'A' && line[i + 1] == ' ')
+	if (line[i + 1] && line[i] == 'A' && line[i + 1] == ' ')
 		ft_read_ambient(minirt, line);
-	if (line[i] == 'C' && line [i + 1] == ' ')
+	if (line[i + 1] && line[i] == 'C' && line [i + 1] == ' ')
 		ft_read_camera(minirt, line);
-	if (line[i] == 'L' && line [i + 1] == ' ')
+	if (line[i + 1] && line[i] == 'L' && line [i + 1] == ' ')
 		ft_read_light(minirt, line);
+	if (line[i + 2]
+		&& (line[i] == 's' && line [i + 1] == 'p' && line[i + 2] == ' '))
+		ft_add_obj_to_lst(minirt, line);
 	printf("%s\n", line);
+}
+
+void	ft_print_object(t_object *object);
+
+void ft_create_objs_arr(t_minirt *minirt)
+{
+	int i;
+	int j;
+
+	i = 1;
+	while (minirt->objs_lst->previous)
+		minirt->objs_lst = minirt->objs_lst->previous;
+	while (minirt->objs_lst->next)
+	{
+		minirt->objs_lst = minirt->objs_lst->next;
+		i++;
+	}
+	printf("\n\n>>>>> %d <<<<<\n\n", i);
+	minirt->objs = malloc(sizeof(t_object) * (i + 1));
+	if (!minirt->objs)
+	{
+		//error
+	}
+	ft_memset(minirt->objs, 0, sizeof(t_object) * (i + 1));
+	j = 0;
+	while (minirt->objs_lst->previous)
+		minirt->objs_lst = minirt->objs_lst->previous;
+	while (minirt->objs_lst)
+	{
+		minirt->objs[j] = minirt->objs_lst;
+	printf("@@@ %p > %p > %p @@@\n", minirt->objs_lst->previous, minirt->objs_lst, minirt->objs_lst->next);
+		minirt->objs_lst = minirt->objs_lst->next;
+		j++;
+	}
+	minirt->objs[j] = 0;
+
+	j = 0;
+	while (minirt->objs[j])
+	{
+		ft_print_object(minirt->objs[j]);
+		j++;
+	}
+}
+
+void ft_print_objs_lst(t_minirt *minirt)
+{
+	t_object *tmp;
+
+	tmp = minirt->objs_lst;
+	while (tmp->previous)
+		tmp = tmp->previous;
+	while (tmp)
+	{
+		printf("\033[33m\n########## OBJECT ##########\n");
+		printf("[TYPE] %c\n", tmp->type);
+		printf("[CENTER] x: %f, y: %f, z: %f\n",
+			   tmp->center->x,
+			   tmp->center->y,
+			   tmp->center->z);
+		printf("[VECTOR] x: %f, y: %f, z: %f\n",
+			   tmp->norm_v->x,
+			   tmp->norm_v->y,
+			   tmp->norm_v->z);
+		printf("[RADIUS] %f\n", tmp->radius);
+		printf("[HEIGHT] %f\n", tmp->height);
+		printf("[RGB] r: %d, g: %d, b: %d\n",
+			   tmp->rgb.r,
+			   tmp->rgb.g,
+			   tmp->rgb.b);
+		printf("[COLOR] %X\n", tmp->colour);
+		printf("---------- ------ ----------\n"COLOR_END);
+		printf("%p > %p > %p\n", tmp->previous, tmp, tmp->next);
+		tmp = tmp->next;
+	}
 }
 
 void ft_parsing(char *file_name, t_minirt *minirt)
@@ -85,5 +162,7 @@ void ft_parsing(char *file_name, t_minirt *minirt)
 			i = 0;
 		}
 	}
+	ft_print_objs_lst(minirt);
+	ft_create_objs_arr(minirt);
 	free(line);
 }
