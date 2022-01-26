@@ -36,13 +36,16 @@ void	ft_read_sphere(t_minirt *minirt, char *line)
 
 	i = 3;
 	minirt->objs_lst->type = 'S';
-	while (line[i++] == ' ');
+	while (line[i] == ' ')
+		i++;
 	minirt->objs_lst->center->x = ft_atof(line, &i);
 	minirt->objs_lst->center->y = ft_atof(line, &i);
 	minirt->objs_lst->center->z = ft_atof(line, &i);
-	while (line[i++] == ' ');
+	while (line[i] == ' ')
+		i++;
 	minirt->objs_lst->radius = ft_atof(line, &i) / 2;
-	while (line[i++] == ' ');
+	while (line[i] == ' ')
+		i++;
 	minirt->objs_lst->rgb.r = ft_atoi(&line[i]);
 	while (ft_isdigit(line[i]))
 		i++;
