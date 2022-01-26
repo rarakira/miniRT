@@ -54,12 +54,14 @@ static void ft_parse_objects(t_minirt *minirt, char *line)
 		i++;
 	if (line[i + 1] && line[i] == 'A' && line[i + 1] == ' ')
 		ft_read_ambient(minirt, line);
-	if (line[i + 1] && line[i] == 'C' && line [i + 1] == ' ')
+	else if (line[i + 1] && line[i] == 'C' && line [i + 1] == ' ')
 		ft_read_camera(minirt, line);
-	if (line[i + 1] && line[i] == 'L' && line [i + 1] == ' ')
+	else if (line[i + 1] && line[i] == 'L' && line [i + 1] == ' ')
 		ft_read_light(minirt, line);
-	if (line[i + 2]
-		&& (line[i] == 's' && line [i + 1] == 'p' && line[i + 2] == ' '))
+	else if (line[i + 2] && line[i + 2] == ' '
+		&& ((line[i] == 's' && line [i + 1] == 'p' )
+		|| (line[i] == 'p' && line [i + 1] == 'l')
+		|| (line[i] == 'c' && line [i + 1] == 'y')))
 		ft_add_obj_to_lst(minirt, line);
 	printf("%s\n", line);
 }
