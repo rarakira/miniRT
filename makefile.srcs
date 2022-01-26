@@ -20,10 +20,12 @@ OBJECT_DIR		=	objects
 OBJECTS			=	$(addprefix $(OBJECT_DIR)/, \
                     ambient.c \
                     camera.c \
+                    cylinder.c \
                     light.c \
-                    sphere.c \
                     object.c \
-                    object_intersection.c)
+                    object_intersection.c \
+                    plane.c \
+                    sphere.c)
 # end OBJECTS
 
 # HOOKS

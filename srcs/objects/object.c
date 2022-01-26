@@ -68,7 +68,12 @@ void ft_read_object(t_minirt *minirt, char *line)
 	if (line[i + 2] && line[i + 2] == ' '
 		&& line[i] == 's' && line[i + 1] == 'p' )
 		ft_read_sphere(minirt, line);
-
+	if (line[i + 2] && line[i + 2] == ' '
+		&& line[i] == 'p' && line[i + 1] == 'l' )
+		ft_read_plane(minirt, line);
+	if (line[i + 2] && line[i + 2] == ' '
+		&& line[i] == 'c' && line[i + 1] == 'y' )
+		ft_read_cylinder(minirt, line);
 	ft_print_object(minirt->objs_lst);
 }
 

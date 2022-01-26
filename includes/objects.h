@@ -68,6 +68,8 @@ void	ft_init_light(t_minirt *minirt);
 void	ft_read_light(t_minirt *minirt, char *line);
 void	ft_init_objs_list(t_minirt *minirt);
 void	ft_read_sphere(t_minirt *minirt, char *line);
+void	ft_read_plane(t_minirt *minirt, char *line);
+void	ft_read_cylinder(t_minirt *minirt, char *line);
 void	ft_add_obj_to_lst(t_minirt *minirt, char *line);
 t_object		*new_sphere(t_vector *center, float radius, int colour);
 
