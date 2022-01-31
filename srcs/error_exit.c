@@ -10,10 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-
-#include "libft.h"
-#include "error_msgs.h"
+//#include <unistd.h>
+#include "../libs/libft/libft.h"
+//#include "../includes/error_msgs.h"
 
 void	exit_on_error(int err, char *msg)
 {
