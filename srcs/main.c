@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 18:59:26 by lbaela            #+#    #+#             */
-/*   Updated: 2022/01/20 16:36:41 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/01/31 20:47:50 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,10 @@ int	main(int argc, char **argv)
 	t_minirt	minirt;
 	int			fd;
 
-	(void) argv;
-
+	g_obj_n = 0;
 	fd = open(argv[1], O_RDONLY);
 	if (argc != 2 || fd < 0
-		|| !ft_strnstr(argv[1], ".rt", ft_strlen(argv[1]))
-			)
+		|| !ft_strnstr(argv[1], ".rt", ft_strlen(argv[1])))
 	{
 		printf("Error \n");
 		printf(COLOR_ERROR"Failed to open file\n"COLOR_END);

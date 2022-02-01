@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:30:24 by lbaela            #+#    #+#             */
-/*   Updated: 2022/01/19 13:20:58 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/01/31 18:57:59 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_light
 
 /*
 Types in *CAPITAL*:
-'S' = sphere, 'P' = plane, 'C' = cyllinder
+'S' = sphere, 'P' = plane, 'C' = cylinder
 */
 typedef struct s_object
 {
@@ -55,6 +55,12 @@ typedef struct s_object
 	float		height;
 	t_rgb		rgb; // rgb -> hex conversion
 	int			colour;
+	float		a;
+	float		b;
+	float		c;
+	float		discr;
+	float		dist1;
+	float		dist2;
 	struct s_object *next;
 	struct s_object *previous;
 }				t_object;

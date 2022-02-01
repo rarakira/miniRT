@@ -5,14 +5,15 @@ MAIN			=	main.c error_exit.c
 # PARSER
 PARSER_DIR		=	parser
 PARSER			=	$(addprefix $(PARSER_DIR)/, \
-                    parser.c\
+                    parser.c \
                     string_to_float.c)
 # end PARSER
 
 # VECTORS
 VECTOR_DIR		=	vectors
 VECTORS			=	$(addprefix $(VECTOR_DIR)/, \
-vectors.c)
+                    vectors.c \
+                    vectors_operations.c)
 # end VECTORS
 
 # OBJECTS

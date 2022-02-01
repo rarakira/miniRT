@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 21:10:32 by lbaela            #+#    #+#             */
-/*   Updated: 2022/01/20 16:23:26 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/01 11:25:17 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,16 @@ void	ray_tracing(t_minirt *minirt)
 	mlx_y = 0;
 	proj = get_projection_plane(WIN_WIDTH, WIN_HEIGHT,
 			minirt->camera->angle);
-	y_angle = (WIN_HEIGHT / 2);
-	while (y_angle >= (WIN_HEIGHT / 2) * -1)
+	y_angle = (WIN_HEIGHT / 2.0);
+	while (y_angle >= (WIN_HEIGHT / 2.0) * -1.0)
 	{
 		mlx_x = 0;
 		y_ray = y_angle * proj->y_pix;
-		x_angle = (WIN_WIDTH / 2) * -1;
-		while (x_angle <= (WIN_WIDTH / 2))
+		x_angle = (WIN_WIDTH / 2) * -1.0;
+		while (x_angle <= (WIN_WIDTH / 2.0))
 		{
 			x_ray = x_angle * proj->x_pix;
-			ray = new_vect(x_ray, y_ray, -1);
+			ray = new_vect(x_ray, y_ray, -1.0);
 			normalise_vect(ray);
 			i = object_intersects(minirt, minirt->objs, ray);
 			if (i != -1)

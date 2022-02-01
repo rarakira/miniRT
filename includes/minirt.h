@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 18:42:37 by lbaela            #+#    #+#             */
-/*   Updated: 2022/01/20 16:23:26 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/01 13:12:20 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # define WIN_WIDTH	1200
 # define WIN_HEIGHT	800
 
+# define MIN_DIST	0.0001
+# define MAX_DIST	100000000.0
+
 # define COL_RED		0x00D13632
 # define COL_ORANGE		0x00E2571E
 # define COL_YELLOW		0x00CDB924
@@ -24,11 +27,13 @@
 # define COL_VIOLET		0x00503FA9
 # define COL_BLACK		0x002B2B2A
 
-typedef struct s_ambient t_ambient;
-typedef struct s_camera	t_camera;
-typedef struct s_light t_light;
-typedef struct s_object	t_object;
-typedef struct s_scene	t_scene;
+int							g_obj_n;
+
+typedef struct s_ambient	t_ambient;
+typedef struct s_camera		t_camera;
+typedef struct s_light		t_light;
+typedef struct s_object		t_object;
+typedef struct s_scene		t_scene;
 
 typedef struct s_minirt {
 	void		*mlx;
@@ -68,12 +73,19 @@ void		exit_on_error(int err, char *msg);
 /* ray tracing */
 void		ray_tracing(t_minirt *minirt);
 int			object_intersects(t_minirt *minirt, t_object **obj, t_vector *ray);
+float		sphere_intersects(t_camera *cam, t_object *obj, t_vector *ray);
+float		plane_intersects(t_camera *cam, t_object *obj, t_vector *ray);
+float		cylinder_intersects(t_camera *cam, t_object *obj, t_vector *ray);
 
 /* vector functions */
 t_vector	*new_vect(float x, float y, float z);
+t_vector	*vect_add(t_vector *v1, t_vector *v2);
 t_vector	*vect_substract(t_vector *v1, t_vector *v2);
 float		vect_len(t_vector *vect);
 void		normalise_vect(t_vector *vect);
 float		vect_dot_product(t_vector *v1, t_vector *v2);
+void		vect_mult(t_vector *vect, float n);
+void		vect_div(t_vector *vect, float n);
+
 
 #endif
