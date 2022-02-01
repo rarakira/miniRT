@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:38:56 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/01 13:13:52 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/01 14:28:53 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 static inline float	find_dists(t_object *obj)
 {
-	obj->discr = pow(obj->b, 2) - (4 * obj->a * obj->c);
+	obj->discr = obj->b * obj->b - (4 * obj->a * obj->c);
 	if (obj->discr < 0.0)
 		return (0);
 	obj->dist1 = (-obj->b - sqrt(obj->discr)) / (2 * obj->a);
@@ -33,13 +33,12 @@ static inline float	find_dists(t_object *obj)
 
 float	sphere_intersects(t_camera *cam, t_object *obj, t_vector *ray)
 {
-	t_vector	*cam_sp;
+	t_vector	cam_sp;
 
 	cam_sp = vect_substract(cam->origin, obj->center);
 	obj->a = 1;
-	obj->b = 2 * (vect_dot_product(cam_sp, ray));
-	obj->c = vect_dot_product(cam_sp, cam_sp) - pow(obj->radius, 2);
-	free(cam_sp);
+	obj->b = 2 * (vect_dot_product(&cam_sp, ray));
+	obj->c = vect_dot_product(&cam_sp, &cam_sp) - obj->radius * obj->radius;
 	return (find_dists(obj));
 }
 

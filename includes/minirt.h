@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 18:42:37 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/01 13:12:20 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/01 14:27:38 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ float		cylinder_intersects(t_camera *cam, t_object *obj, t_vector *ray);
 
 /* vector functions */
 t_vector	*new_vect(float x, float y, float z);
-t_vector	*vect_add(t_vector *v1, t_vector *v2);
-t_vector	*vect_substract(t_vector *v1, t_vector *v2);
+t_vector	vect_add(t_vector *v1, t_vector *v2);
+t_vector	vect_substract(t_vector *v1, t_vector *v2);
 float		vect_len(t_vector *vect);
 void		normalise_vect(t_vector *vect);
 float		vect_dot_product(t_vector *v1, t_vector *v2);

@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 13:13:15 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/01 13:13:50 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/01 14:28:36 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,14 @@
 float	plane_intersects(t_camera *cam, t_object *obj, t_vector *ray)
 {
 	float		r_nv;
-	t_vector	*cam_pl;
+	t_vector	cam_pl;
 
 	normalise_vect(obj->norm_v);
 	r_nv = vect_dot_product(ray, obj->norm_v);
 	if (r_nv == 0 || fabs(r_nv) < MIN_DIST)
 		return (0);
 	cam_pl = vect_substract(cam->origin, obj->center);
-	obj->dist1 = -1 * vect_dot_product(cam_pl, obj->norm_v) / r_nv;
-	free(cam_pl);
+	obj->dist1 = -1 * vect_dot_product(&cam_pl, obj->norm_v) / r_nv;
 	if (obj->dist1 < MIN_DIST || obj->dist1 > MAX_DIST)
 		return (0);
 	return (obj->dist1);

@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 19:52:59 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/01 13:23:42 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/01 14:30:14 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,23 @@
  * a{a1, a2}; b{b1, b2}
  * c = a - b = c{a1-b1, a2-b2}
  */
-t_vector	*vect_substract(t_vector *v1, t_vector *v2)
+t_vector	vect_substract(t_vector *v1, t_vector *v2)
 {
-	t_vector	*res;
+	t_vector	res;
 
-	res = new_vect(v1->x - v2->x, v1->y - v2->y, v1->z - v2->z);
+	res.x = v1->x - v2->x;
+	res.y = v1->y - v2->y;
+	res.z = v1->z - v2->z;
 	return (res);
 }
 
-t_vector	*vect_add(t_vector *v1, t_vector *v2)
+t_vector	vect_add(t_vector *v1, t_vector *v2)
 {
-	t_vector	*res;
+	t_vector	res;
 
-	res = new_vect(v1->x + v2->x, v1->y + v2->y, v1->z + v2->z);
+	res.x = v1->x + v2->x;
+	res.y = v1->y + v2->y;
+	res.z = v1->z + v2->z;
 	return (res);
 }
 
