@@ -6,10 +6,11 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 19:52:59 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/01 14:30:14 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/02 22:51:48 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 
@@ -42,18 +43,24 @@ t_vector	vect_add(t_vector *v1, t_vector *v2)
 	return (res);
 }
 
-void	vect_mult(t_vector *vect, float n)
+t_vector	vect_mult(t_vector *vect, float n)
 {
-	vect->x *= n;
-	vect->y *= n;
-	vect->z *= n;
+	t_vector	res;
+
+	res.x = vect->x * n;
+	res.y = vect->y * n;
+	res.z = vect->z * n;
+	return (res);
 }
 
-void	vect_div(t_vector *vect, float n)
+t_vector	vect_div(t_vector *vect, float n)
 {
-	vect->x /= n;
-	vect->y /= n;
-	vect->z /= n;
+	t_vector	res;
+
+	res.x = vect->x / n;
+	res.y = vect->y / n;
+	res.z = vect->z / n;
+	return (res);
 }
 
 /* Длина вектора */

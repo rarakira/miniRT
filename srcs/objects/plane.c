@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 13:13:15 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/01 14:28:36 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/02 17:18:27 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,13 @@ float	plane_intersects(t_camera *cam, t_object *obj, t_vector *ray)
 	if (r_nv == 0 || fabs(r_nv) < MIN_DIST)
 		return (0);
 	cam_pl = vect_substract(cam->origin, obj->center);
-	obj->dist1 = -1 * vect_dot_product(&cam_pl, obj->norm_v) / r_nv;
-	if (obj->dist1 < MIN_DIST || obj->dist1 > MAX_DIST)
+	obj->dist = -1 * vect_dot_product(&cam_pl, obj->norm_v) / r_nv;
+	if (obj->dist < MIN_DIST || obj->dist > MAX_DIST)
 		return (0);
-	return (obj->dist1);
+	obj->hit_point = vect_mult(ray, obj->dist);
+	obj->hit_norm_v = *obj->norm_v;
+	normalise_vect(&obj->hit_norm_v);
+	return (obj->dist);
 }
 
 void	ft_read_plane(t_minirt *minirt, char *line)

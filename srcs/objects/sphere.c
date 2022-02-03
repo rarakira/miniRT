@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:38:56 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/01 14:28:53 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/02 23:14:56 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,40 @@
 
 #include "../../includes/parsing.h"
 
-static inline float	find_dists(t_object *obj)
+static inline float	find_dists(t_camera *cam, t_object *obj, t_vector *ray, t_eq eq)
 {
-	obj->discr = obj->b * obj->b - (4 * obj->a * obj->c);
-	if (obj->discr < 0.0)
+	eq.discr = eq.b * eq.b - (4 * eq.a * eq.c);
+	if (eq.discr < 0.0)
 		return (0);
-	obj->dist1 = (-obj->b - sqrt(obj->discr)) / (2 * obj->a);
-	obj->dist2 = (-obj->b + sqrt(obj->discr)) / (2 * obj->a);
-	if (obj->dist1 > MIN_DIST && obj->dist2 > MIN_DIST)
-		return (fmin(obj->dist1, obj->dist2));
-	else if (obj->dist1 > MIN_DIST)
-		return (obj->dist1);
-	else if (obj->dist2 > MIN_DIST)
-		return (obj->dist2);
+	eq.dist1 = (-eq.b - sqrt(eq.discr)) / (2 * eq.a);
+	eq.dist2 = (-eq.b + sqrt(eq.discr)) / (2 * eq.a);
+	if (eq.dist1 > MIN_DIST || eq.dist2 > MIN_DIST)
+	{
+		if (eq.dist1 > MIN_DIST && eq.dist2 > MIN_DIST)
+			obj->dist = fmin(eq.dist1, eq.dist2);
+		else if (eq.dist1 > MIN_DIST)
+			obj->dist = eq.dist1;
+		else
+			obj->dist = eq.dist2;
+		obj->hit_point = vect_mult(ray, obj->dist);
+		obj->hit_point = vect_add(cam->origin, &obj->hit_point);
+		obj->hit_norm_v = vect_substract(obj->center, &obj->hit_point);
+		normalise_vect(&obj->hit_norm_v);
+		return (obj->dist);
+	}
 	return (0);
 }
 
 float	sphere_intersects(t_camera *cam, t_object *obj, t_vector *ray)
 {
 	t_vector	cam_sp;
+	t_eq		eq;
 
 	cam_sp = vect_substract(cam->origin, obj->center);
-	obj->a = 1;
-	obj->b = 2 * (vect_dot_product(&cam_sp, ray));
-	obj->c = vect_dot_product(&cam_sp, &cam_sp) - obj->radius * obj->radius;
-	return (find_dists(obj));
+	eq.a = 1;
+	eq.b = 2 * (vect_dot_product(&cam_sp, ray));
+	eq.c = vect_dot_product(&cam_sp, &cam_sp) - obj->radius * obj->radius;
+	return (find_dists(cam, obj, ray, eq));
 }
 
 //t_object	*new_sphere(t_vector *center, float radius, int colour)

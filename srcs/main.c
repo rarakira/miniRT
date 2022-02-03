@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 18:59:26 by lbaela            #+#    #+#             */
-/*   Updated: 2022/01/31 20:47:50 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/02 18:57:06 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 #include "../libs/minilibx_macos/mlx.h"
 #include "../libs/libft/libft.h"
 #include "../includes/minirt.h"
-#include "../includes/parsing.h"
 #include "../includes/objects.h"
+#include "../includes/parsing.h"
 #include "../includes/error_msgs.h"
 
 # define COLOR_ERROR "\033[31m"
