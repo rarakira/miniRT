@@ -4,59 +4,51 @@
 
 #include "parsing.h"
 
-static float ft_atof_get_sign(char *line, int *i)
+static float ft_atof_get_sign(char *str, int *i)
 {
 	int		mult;
 
 	mult = 1.0;
-	if (line[*i] == '-')
+	if (str[*i] == '-')
 		mult = -1.0;
-	if (line[*i] == '-' || line[*i] == '+')
+	if (str[*i] == '-' || str[*i] == '+')
 		*i += 1;
 	return (mult);
 }
 
-static int ft_atof_get_integer(char *line, int *i)
+static int ft_atof_get_integer(char *str, int *i, int *devider)
 {
 	int		integer;
 
 	integer = 0;
-	while (ft_isdigit(line[*i]))
+	while (str[*i] >= '0' && str[*i] <= '9')
 	{
 		integer *= 10;
-		integer += line[*i] - '0';
+		integer += str[*i] - '0';
+		*devider *= 10;
 		*i += 1;
 	}
-	if (line[*i] == '.')
+	if (str[*i] == '.')
 		*i += 1;
 	return (integer);
 }
 
-static double ft_dig_num(int num)
-{
-	double	i;
-
-	i = 1;
-	while (num)
-	{
-		num /= 10;
-		i *= 10;
-	}
-	return (i);
-}
-float ft_atof(char *line, int *i)
+float ft_atof(char *str, int *i)
 {
 	float	tmp;
 	float	mult;
 	int		integer;
 	int		fract;
+	int 	divider;
 
 	tmp = 0.0;
-	mult = ft_atof_get_sign(line, i);
-	integer = ft_atof_get_integer(line, i);
-	fract = ft_atof_get_integer(line, i);
-	tmp = mult * ((float)integer + (float)fract / ft_dig_num(fract));
-	if (line[*i] == ',')
+	mult = ft_atof_get_sign(str, i);
+	divider = 0;
+	integer = ft_atof_get_integer(str, i, &divider);
+	divider = 1;
+	fract = ft_atof_get_integer(str, i, &divider);
+	tmp = mult * ((float)integer + (float)fract / divider);
+	if (str[*i] == ',')
 		*i += 1;
 	return (tmp);
 }
