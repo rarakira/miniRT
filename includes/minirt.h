@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 18:42:37 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/02 19:02:18 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/08 16:35:59 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,11 @@ typedef struct s_point
 {
 	float		dist;
 	int			colour;
+	char		type;
 	t_vector	hit_coord;
 	t_vector	norm_v;
 	t_rgb		rgb;
+	t_object	*obj;
 }				t_point;
 
 /* drawing functions */
@@ -108,5 +110,7 @@ void		normalise_vect(t_vector *vect);
 float		vect_dot_product(t_vector *v1, t_vector *v2);
 t_vector	vect_mult(t_vector *vect, float n);
 t_vector	vect_div(t_vector *vect, float n);
+t_vector	reflect_vector(t_vector ray, t_vector norm);
+float		vector_scalar(t_vector v1, t_vector v2);
 
 #endif

@@ -47,4 +47,10 @@ DRAWING			=	$(addprefix $(DRAWING_DIR)/, \
 draw_pixels.c)
 # end DRAWING
 
-SRCS			=	$(MAIN) $(PARSER) $(VECTORS) $(OBJECTS) $(HOOKS) $(RAY_TRACING) $(DRAWING)
+# COLOURS
+COLOURS_DIR		=	colours
+COLOURS			=	$(addprefix $(COLOURS_DIR)/, \
+colours.c)
+# end COLOURS
+
+SRCS			=	$(MAIN) $(PARSER) $(VECTORS) $(OBJECTS) $(HOOKS) $(RAY_TRACING) $(DRAWING) $(COLOURS)

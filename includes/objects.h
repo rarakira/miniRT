@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:30:24 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/02 18:59:36 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/08 18:10:26 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,9 @@ void			ft_read_plane(t_minirt *minirt, char *line);
 void			ft_read_cylinder(t_minirt *minirt, char *line);
 void			ft_add_obj_to_lst(t_minirt *minirt, char *line);
 t_object		*new_sphere(t_vector *center, float radius, int colour);
+
+t_rgb			calc_rgb_light(t_rgb colour, double light);
+t_rgb			multiply_rgbs(t_rgb a, t_rgb b);
+t_rgb			add_rgb_light(t_rgb a, t_rgb b);
 
 #endif

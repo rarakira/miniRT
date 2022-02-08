@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:38:56 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/02 23:14:56 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/08 16:58:31 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 static inline float	find_dists(t_camera *cam, t_object *obj, t_vector *ray, t_eq eq)
 {
+	(void) cam;
 	eq.discr = eq.b * eq.b - (4 * eq.a * eq.c);
 	if (eq.discr < 0.0)
 		return (0);
@@ -31,8 +32,8 @@ static inline float	find_dists(t_camera *cam, t_object *obj, t_vector *ray, t_eq
 		else
 			obj->dist = eq.dist2;
 		obj->hit_point = vect_mult(ray, obj->dist);
-		obj->hit_point = vect_add(cam->origin, &obj->hit_point);
-		obj->hit_norm_v = vect_substract(obj->center, &obj->hit_point);
+		// obj->hit_point = vect_add(cam->origin, &obj->hit_point);
+		obj->hit_norm_v = vect_substract(&obj->hit_point, obj->center);
 		normalise_vect(&obj->hit_norm_v);
 		return (obj->dist);
 	}
