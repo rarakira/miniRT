@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_exit.c                                       :+:      :+:    :+:   */
+/*   camera.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/18 20:24:04 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/08 20:50:30 by lbaela           ###   ########.fr       */
+/*   Created: 2022/01/18 20:45:58 by lbaela            #+#    #+#             */
+/*   Updated: 2022/01/19 11:05:16 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include <unistd.h>
-#include "../libs/libft/libft.h"
-//#include "../includes/error_msgs.h"
+#ifndef CAMERA_H
+# define CAMERA_H
 
-void	exit_on_error(int err, char *msg)
+typedef struct s_vector	t_vector;
+
+typedef struct s_camera
 {
-	write(2, msg, ft_strlen(msg));
-	exit(err);
-}
+	t_vector	*origin;
+	t_vector	*direction;
+	float		angle;
+}				t_camera;
+
+t_camera	*create_camera(t_vector *org, t_vector *dir, float angle);
+
+#endif

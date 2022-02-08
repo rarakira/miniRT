@@ -1,21 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_exit.c                                       :+:      :+:    :+:   */
+/*   cameras.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/18 20:24:04 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/08 20:50:30 by lbaela           ###   ########.fr       */
+/*   Created: 2022/01/18 20:48:46 by lbaela            #+#    #+#             */
+/*   Updated: 2022/01/19 09:46:22 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include <unistd.h>
-#include "../libs/libft/libft.h"
-//#include "../includes/error_msgs.h"
+#include <stdlib.h>
 
-void	exit_on_error(int err, char *msg)
+#include "minirt.h"
+#include "camera.h"
+#include "error_msgs.h"
+
+t_camera	*create_camera(t_vector *org, t_vector *dir, float angle)
 {
-	write(2, msg, ft_strlen(msg));
-	exit(err);
+	t_camera	*cam;
+
+	cam = malloc(sizeof(t_camera));
+	if (cam == NULL)
+		exit_on_error(-1, ERR_MALLOC);
+	cam->origin = org;
+	cam->direction = dir;
+	cam->angle = angle;
+	return (cam);
 }
