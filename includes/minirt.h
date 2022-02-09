@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 18:42:37 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/08 16:35:59 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/09 12:04:31 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,9 @@ void		exit_on_error(int err, char *msg);
 void		ray_tracing(t_minirt *minirt);
 void		object_intersects(	t_minirt *minirt,
 				t_object **objs, t_vector *ray, t_point *point);
-float		sphere_intersects(t_camera *cam, t_object *obj, t_vector *ray);
-float		plane_intersects(t_camera *cam, t_object *obj, t_vector *ray);
-float		cylinder_intersects(t_camera *cam, t_object *obj, t_vector *ray);
+float		sphere_intersects(t_vector *origin, t_object *obj, t_vector *ray);
+float		plane_intersects(t_vector *origin, t_object *obj, t_vector *ray);
+float		cylinder_intersects(t_vector *origin, t_object *obj, t_vector *ray);
 
 /* vector functions */
 t_vector	*new_vect(float x, float y, float z);

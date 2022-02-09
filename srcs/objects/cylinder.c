@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 13:13:01 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/08 18:10:16 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/09 11:56:51 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "../../includes/parsing.h"
 
 static inline float	find_dists_cy(	t_object *obj,
-									t_vector *cam_cyl, t_vector *ray, t_eq eq)
+									t_vector *orig_cyl, t_vector *ray, t_eq eq)
 {
 	short		is_valid1;
 	short		is_valid2;
@@ -27,9 +27,9 @@ static inline float	find_dists_cy(	t_object *obj,
 	eq.dist1 = (-eq.b - sqrt(eq.discr)) / (2 * eq.a);
 	eq.dist2 = (-eq.b + sqrt(eq.discr)) / (2 * eq.a);
 	eq.m1 = vect_dot_product(ray, obj->norm_v) * eq.dist1
-		+ vect_dot_product(cam_cyl, obj->norm_v);
+		+ vect_dot_product(orig_cyl, obj->norm_v);
 	eq.m2 = vect_dot_product(ray, obj->norm_v) * eq.dist2
-		+ vect_dot_product(cam_cyl, obj->norm_v);
+		+ vect_dot_product(orig_cyl, obj->norm_v);
 	is_valid1 = (eq.dist1 > MIN_DIST
 			&& eq.m1 >= -obj->height && eq.m1 <= obj->height);
 	is_valid2 = (eq.dist2 > MIN_DIST
@@ -55,23 +55,23 @@ static inline float	find_dists_cy(	t_object *obj,
 	return (0);
 }
 
-float	cylinder_intersects(t_camera *cam, t_object *obj, t_vector *ray)
+float	cylinder_intersects(t_vector *origin, t_object *obj, t_vector *ray)
 {
-	t_vector	cam_cyl;
+	t_vector	orig_cyl;
 	t_eq		eq;
 	float		dot_r_nv;
 	float		dot_cc_nv;
 
-	cam_cyl = vect_substract(cam->origin, obj->center);
+	orig_cyl = vect_substract(origin, obj->center);
 	normalise_vect(obj->norm_v);
 	dot_r_nv = vect_dot_product(ray, obj->norm_v);
-	dot_cc_nv = vect_dot_product(&cam_cyl, obj->norm_v);
+	dot_cc_nv = vect_dot_product(&orig_cyl, obj->norm_v);
 	eq.a = vect_dot_product(ray, ray)
 		- dot_r_nv * dot_r_nv;
-	eq.b = 2 * (vect_dot_product(ray, &cam_cyl) - dot_r_nv * dot_cc_nv);
-	eq.c = vect_dot_product(&cam_cyl, &cam_cyl)
+	eq.b = 2 * (vect_dot_product(ray, &orig_cyl) - dot_r_nv * dot_cc_nv);
+	eq.c = vect_dot_product(&orig_cyl, &orig_cyl)
 		- dot_cc_nv * dot_cc_nv - obj->radius * obj->radius;
-	return (find_dists_cy(obj, &cam_cyl, ray, eq));
+	return (find_dists_cy(obj, &orig_cyl, ray, eq));
 }
 
 void	ft_read_cylinder(t_minirt *minirt, char *line)
