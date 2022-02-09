@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 13:13:01 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/09 11:56:51 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/09 19:38:21 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "../../includes/parsing.h"
 
 static inline float	find_dists_cy(	t_object *obj,
-									t_vector *orig_cyl, t_vector *ray, t_eq eq)
+									t_vector orig_cyl, t_vector ray, t_eq eq)
 {
 	short		is_valid1;
 	short		is_valid2;
@@ -24,12 +24,13 @@ static inline float	find_dists_cy(	t_object *obj,
 	eq.discr = eq.b * eq.b - (4 * eq.a * eq.c);
 	if (eq.discr < 0.0)
 		return (0);
-	eq.dist1 = (-eq.b - sqrt(eq.discr)) / (2 * eq.a);
-	eq.dist2 = (-eq.b + sqrt(eq.discr)) / (2 * eq.a);
-	eq.m1 = vect_dot_product(ray, obj->norm_v) * eq.dist1
-		+ vect_dot_product(orig_cyl, obj->norm_v);
-	eq.m2 = vect_dot_product(ray, obj->norm_v) * eq.dist2
-		+ vect_dot_product(orig_cyl, obj->norm_v);
+	eq.discr = sqrt(eq.discr);
+	eq.dist1 = (-eq.b - eq.discr) / (2 * eq.a);
+	eq.dist2 = (-eq.b + eq.discr) / (2 * eq.a);
+	eq.m1 = vect_dot_product(ray, *obj->norm_v) * eq.dist1
+		+ vect_dot_product(orig_cyl, *obj->norm_v);
+	eq.m2 = vect_dot_product(ray, *obj->norm_v) * eq.dist2
+		+ vect_dot_product(orig_cyl, *obj->norm_v);
 	is_valid1 = (eq.dist1 > MIN_DIST
 			&& eq.m1 >= -obj->height && eq.m1 <= obj->height);
 	is_valid2 = (eq.dist2 > MIN_DIST
@@ -46,32 +47,32 @@ static inline float	find_dists_cy(	t_object *obj,
 		if (obj->dist == eq.dist2)
 			obj->m = eq.m2;
 		obj->hit_point = vect_mult(ray, obj->dist);
-		obj->hit_norm_v = vect_substract(&obj->hit_point, obj->center);
-		tmp = vect_mult(obj->norm_v, obj->m);
-		obj->hit_norm_v = vect_substract(&obj->hit_norm_v, &tmp);
+		obj->hit_norm_v = vect_substract(obj->hit_point, *obj->center);
+		tmp = vect_mult(*obj->norm_v, obj->m);
+		obj->hit_norm_v = vect_substract(obj->hit_norm_v, tmp);
 		normalise_vect(&obj->hit_norm_v);
 		return (obj->dist);
 	}
 	return (0);
 }
 
-float	cylinder_intersects(t_vector *origin, t_object *obj, t_vector *ray)
+float	cylinder_intersects(t_vector origin, t_object *obj, t_vector ray)
 {
 	t_vector	orig_cyl;
 	t_eq		eq;
 	float		dot_r_nv;
 	float		dot_cc_nv;
 
-	orig_cyl = vect_substract(origin, obj->center);
+	orig_cyl = vect_substract(origin, *obj->center);
 	normalise_vect(obj->norm_v);
-	dot_r_nv = vect_dot_product(ray, obj->norm_v);
-	dot_cc_nv = vect_dot_product(&orig_cyl, obj->norm_v);
+	dot_r_nv = vect_dot_product(ray, *obj->norm_v);
+	dot_cc_nv = vect_dot_product(orig_cyl, *obj->norm_v);
 	eq.a = vect_dot_product(ray, ray)
 		- dot_r_nv * dot_r_nv;
-	eq.b = 2 * (vect_dot_product(ray, &orig_cyl) - dot_r_nv * dot_cc_nv);
-	eq.c = vect_dot_product(&orig_cyl, &orig_cyl)
+	eq.b = 2 * (vect_dot_product(ray, orig_cyl) - dot_r_nv * dot_cc_nv);
+	eq.c = vect_dot_product(orig_cyl, orig_cyl)
 		- dot_cc_nv * dot_cc_nv - obj->radius * obj->radius;
-	return (find_dists_cy(obj, &orig_cyl, ray, eq));
+	return (find_dists_cy(obj, orig_cyl, ray, eq));
 }
 
 void	ft_read_cylinder(t_minirt *minirt, char *line)

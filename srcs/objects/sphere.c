@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:38:56 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/09 12:08:22 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/09 19:37:34 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,14 @@
 
 #include "../../includes/parsing.h"
 
-static inline float	find_dists(t_object *obj, t_vector *ray, t_eq eq)
+static inline float	find_dists(t_object *obj, t_vector ray, t_eq eq)
 {
 	eq.discr = eq.b * eq.b - (4 * eq.a * eq.c);
 	if (eq.discr < 0.0)
 		return (0);
-	eq.dist1 = (-eq.b - sqrt(eq.discr)) / (2 * eq.a);
-	eq.dist2 = (-eq.b + sqrt(eq.discr)) / (2 * eq.a);
+	eq.discr = sqrt(eq.discr);
+	eq.dist1 = (-eq.b - eq.discr) / (2 * eq.a);
+	eq.dist2 = (-eq.b + eq.discr) / (2 * eq.a);
 	if (eq.dist1 > MIN_DIST || eq.dist2 > MIN_DIST)
 	{
 		if (eq.dist1 > MIN_DIST && eq.dist2 > MIN_DIST)
@@ -31,22 +32,22 @@ static inline float	find_dists(t_object *obj, t_vector *ray, t_eq eq)
 		else
 			obj->dist = eq.dist2;
 		obj->hit_point = vect_mult(ray, obj->dist);
-		obj->hit_norm_v = vect_substract(&obj->hit_point, obj->center);
+		obj->hit_norm_v = vect_substract(obj->hit_point, *obj->center);
 		normalise_vect(&obj->hit_norm_v);
 		return (obj->dist);
 	}
 	return (0);
 }
 
-float	sphere_intersects(t_vector *origin, t_object *obj, t_vector *ray)
+float	sphere_intersects(t_vector origin, t_object *obj, t_vector ray)
 {
 	t_vector	orig_sp;
 	t_eq		eq;
 
-	orig_sp = vect_substract(origin, obj->center);
+	orig_sp = vect_substract(origin, *obj->center);
 	eq.a = 1;
-	eq.b = 2 * (vect_dot_product(&orig_sp, ray));
-	eq.c = vect_dot_product(&orig_sp, &orig_sp) - obj->radius * obj->radius;
+	eq.b = 2 * (vect_dot_product(orig_sp, ray));
+	eq.c = vect_dot_product(orig_sp, orig_sp) - obj->radius * obj->radius;
 	return (find_dists(obj, ray, eq));
 }
 

@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 13:13:15 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/09 11:57:43 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/09 19:38:30 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,42 +14,23 @@
 
 #include "../../includes/parsing.h"
 
-// float	plane_intersects(t_camera *cam, t_object *obj, t_vector *ray)
-// {
-// 	float		r_nv;
-// 	t_vector	cam_pl;
-
-// 	normalise_vect(obj->norm_v);
-// 	r_nv = vect_dot_product(ray, obj->norm_v);
-// 	if (r_nv == 0 || fabs(r_nv) < MIN_DIST)
-// 		return (0);
-// 	cam_pl = vect_substract(cam->origin, obj->center);
-// 	obj->dist = -1 * vect_dot_product(&cam_pl, obj->norm_v) / r_nv;
-// 	if (obj->dist < MIN_DIST || obj->dist > MAX_DIST)
-// 		return (0);
-// 	obj->hit_point = vect_mult(ray, obj->dist);
-// 	obj->hit_norm_v = *obj->norm_v;
-// 	normalise_vect(&obj->hit_norm_v);
-// 	return (obj->dist);
-// }
-
-float	plane_intersects(t_vector *origin, t_object *obj, t_vector *ray)
+float	plane_intersects(t_vector origin, t_object *obj, t_vector ray)
 {
 	float		dot_r_nv;
 	t_vector	orig_pl;
 
 	normalise_vect(obj->norm_v);
-	dot_r_nv = vect_dot_product(ray, obj->norm_v);
+	dot_r_nv = vect_dot_product(ray, *obj->norm_v);
 	if (dot_r_nv == 0 || fabs(dot_r_nv) < MIN_DIST)
 		return (0);
-	orig_pl = vect_substract(origin, obj->center);
-	obj->dist = -vect_dot_product(&orig_pl, obj->norm_v) / dot_r_nv;
+	orig_pl = vect_substract(origin, *obj->center);
+	obj->dist = -vect_dot_product(orig_pl, *obj->norm_v) / dot_r_nv;
 	if (obj->dist < MIN_DIST || obj->dist > MAX_DIST)
 		return (0);
 	obj->hit_point = vect_mult(ray, obj->dist);
 	obj->hit_norm_v = *obj->norm_v;
 	if (dot_r_nv < 0.0)
-		obj->hit_norm_v = vect_mult(&obj->hit_norm_v, -1);
+		obj->hit_norm_v = vect_mult(obj->hit_norm_v, -1);
 	normalise_vect(&obj->hit_norm_v);
 	return (obj->dist);
 }

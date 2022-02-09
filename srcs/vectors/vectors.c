@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 19:52:59 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/08 16:05:10 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/09 18:58:34 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	normalise_vect(t_vector *vect)
 {
 	float	len;
 
-	len = vect_len(vect);
+	len = vect_len(*vect);
 	if (!len)
 	{
 		vect->x = 0;
@@ -64,11 +64,11 @@ void	normalise_vect(t_vector *vect)
  * cos(90) = 0, i = j = k = 1 ->
  * a*b = xa*xb + ya*yb + za*zb
  */
-float	vect_dot_product(t_vector *v1, t_vector *v2)
+float	vect_dot_product(t_vector v1, t_vector v2)
 {
 	float	res;
 
-	res = ((v1->x * v2->x) + (v1->y * v2->y) + (v1->z * v2->z));
+	res = ((v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z));
 	return (res);
 }
 
@@ -84,8 +84,8 @@ t_vector	reflect_vector(t_vector ray, t_vector norm)
 {
 	t_vector	res;
 
-	res = vect_mult(&norm, 2);
-	res = vect_mult(&res, vector_scalar(norm, ray));
-	res = vect_substract(&res, &ray);
+	res = vect_mult(norm, 2);
+	res = vect_mult(res, vector_scalar(norm, ray));
+	res = vect_substract(res, ray);
 	return (res);
 }

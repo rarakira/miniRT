@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 21:10:32 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/02 16:14:13 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/09 19:00:43 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	ray_tracing(t_minirt *minirt)
 			x_ray = x_angle * proj->x_pix;
 			ray = new_vect(x_ray, y_ray, -1.0);
 			normalise_vect(ray);
-			object_intersects(minirt, minirt->objs, ray, &point);
+			object_intersects(minirt, minirt->objs, *ray, &point);
 			my_mlx_pixel_put(minirt, mlx_x, mlx_y, point.colour);
 			free(ray);
 			mlx_x++;

@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 18:42:37 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/09 12:04:31 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/09 18:53:41 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,20 +96,20 @@ void		exit_on_error(int err, char *msg);
 /* ray tracing */
 void		ray_tracing(t_minirt *minirt);
 void		object_intersects(	t_minirt *minirt,
-				t_object **objs, t_vector *ray, t_point *point);
-float		sphere_intersects(t_vector *origin, t_object *obj, t_vector *ray);
-float		plane_intersects(t_vector *origin, t_object *obj, t_vector *ray);
-float		cylinder_intersects(t_vector *origin, t_object *obj, t_vector *ray);
+				t_object **objs, t_vector ray, t_point *point);
+float		sphere_intersects(t_vector origin, t_object *obj, t_vector ray);
+float		plane_intersects(t_vector origin, t_object *obj, t_vector ray);
+float		cylinder_intersects(t_vector origin, t_object *obj, t_vector ray);
 
 /* vector functions */
 t_vector	*new_vect(float x, float y, float z);
-t_vector	vect_add(t_vector *v1, t_vector *v2);
-t_vector	vect_substract(t_vector *v1, t_vector *v2);
-float		vect_len(t_vector *vect);
+t_vector	vect_add(t_vector v1, t_vector v2);
+t_vector	vect_substract(t_vector v1, t_vector v2);
+float		vect_len(t_vector vect);
 void		normalise_vect(t_vector *vect);
-float		vect_dot_product(t_vector *v1, t_vector *v2);
-t_vector	vect_mult(t_vector *vect, float n);
-t_vector	vect_div(t_vector *vect, float n);
+float		vect_dot_product(t_vector v1, t_vector v2);
+t_vector	vect_mult(t_vector vect, float n);
+t_vector	vect_div(t_vector vect, float n);
 t_vector	reflect_vector(t_vector ray, t_vector norm);
 float		vector_scalar(t_vector v1, t_vector v2);
 

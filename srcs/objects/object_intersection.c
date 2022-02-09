@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:02:01 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/09 18:41:38 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/09 20:02:38 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,17 @@ static void	add_light(t_minirt *minirt, t_point *point)
 	light = minirt->ambient->lighting_ratio;
 	ambient = calc_rgb_light(minirt->ambient->rgb, light);
 	/* add diffuse lighting */
-	l_len = vect_substract(minirt->light->point, &point->hit_coord);
-	n_dot_l = vect_dot_product(&point->norm_v, minirt->light->point);
+	l_len = vect_substract(*minirt->light->point, point->hit_coord);
+	n_dot_l = vect_dot_product(point->norm_v, *minirt->light->point);
 	if (n_dot_l <= 0.0 && point->type == 'P')
 	{
-		point->norm_v = vect_mult(&point->norm_v, -1.0);
+		point->norm_v = vect_mult(point->norm_v, -1.0);
 		n_dot_l *= -1.0;
 	}
 	if (n_dot_l > 0.0)
 	{
 		light = minirt->light->brightness_ratio * n_dot_l
-			/ (vect_len(&point->norm_v) * vect_len(&l_len));
+			/ (vect_len(point->norm_v) * vect_len(l_len));
 		diffuse = calc_rgb_light(minirt->light->rgb, light);
 		ambient = add_rgb_light(ambient, diffuse);
 	}
@@ -47,19 +47,19 @@ static void	add_light(t_minirt *minirt, t_point *point)
 	point->colour = ft_rgb_hex(0, point->rgb);
 }
 
-static void	add_specular(t_vector *ray, t_point *point, t_light *light)
+static void	add_specular(t_vector ray, t_point *point, t_light *light)
 {
 	t_vector	reflect;
 	t_rgb		spec;
 	double		strength;
 	float		r_dot_v;
 
-	reflect = reflect_vector(vect_mult(light->point, -1.0), point->norm_v);
-	r_dot_v = vect_dot_product(&reflect, ray);
+	reflect = reflect_vector(vect_mult(*light->point, -1.0), point->norm_v);
+	r_dot_v = vect_dot_product(reflect, ray);
 	if (r_dot_v > 0.0)
 	{
 		strength = light->brightness_ratio
-			* pow(r_dot_v / vect_len(&reflect) * vect_len(ray), 32);
+			* pow(r_dot_v / vect_len(reflect) * vect_len(ray), 32);
 		spec = calc_rgb_light(light->rgb, 0.6 * strength);
 		point->colour = ft_rgb_hex(0, add_rgb_light(point->rgb, spec));
 	}
@@ -103,18 +103,18 @@ int	intersection_exists(t_object **objs, t_point *point)
 	while (objs[i] != NULL)
 	{
 		if (objs[i]->type == 'S')
-			res = sphere_intersects(&origin, objs[i], &ray);
+			res = sphere_intersects(origin, objs[i], ray);
 		else if (objs[i]->type == 'C')
-			res = cylinder_intersects(&origin, objs[i], &ray);
+			res = cylinder_intersects(origin, objs[i], ray);
 		else if (objs[i]->type == 'P')
-			res = plane_intersects(&origin, objs[i], &ray);
+			res = plane_intersects(origin, objs[i], ray);
 		if (res != 0 && res < point->dist)
 			point->dist = res;
 		i++;
 	}
 	if (point->dist == MAX_DIST)
 		return (0);
-	return (point->dist);
+	return (1);
 }
 
 int	in_shadow(t_minirt *minirt, t_point *point, t_light *light)
@@ -123,10 +123,8 @@ int	in_shadow(t_minirt *minirt, t_point *point, t_light *light)
 	float		dist_to_light;
 	float		dist_to_obj;
 
-	intersect.hit_coord = vect_mult(&point->norm_v, 0.0001);
-	intersect.hit_coord = vect_add(&point->hit_coord, &intersect.hit_coord);
-	// intersect.hit_coord = vect_add(&point->hit_coord, &point->norm_v);
-	intersect.norm_v = vect_substract(light->point, &intersect.hit_coord);
+	intersect.hit_coord = vect_add(point->hit_coord, vect_mult(point->norm_v, 0.0001));
+	intersect.norm_v = vect_substract(*light->point, intersect.hit_coord);
 	normalise_vect(&intersect.norm_v);
 	if (intersection_exists(minirt->objs, &intersect))
 	{
@@ -139,7 +137,7 @@ int	in_shadow(t_minirt *minirt, t_point *point, t_light *light)
 }
 
 void	object_intersects(	t_minirt *minirt,
-							t_object **objs, t_vector *ray, t_point *point)
+							t_object **objs, t_vector ray, t_point *point)
 {
 	int			i;
 	float		res;
@@ -150,11 +148,11 @@ void	object_intersects(	t_minirt *minirt,
 	while (objs[i] != NULL)
 	{
 		if (objs[i]->type == 'S')
-			res = sphere_intersects(minirt->camera->origin, objs[i], ray);
+			res = sphere_intersects(*minirt->camera->origin, objs[i], ray);
 		else if (objs[i]->type == 'C')
-			res = cylinder_intersects(minirt->camera->origin, objs[i], ray);
+			res = cylinder_intersects(*minirt->camera->origin, objs[i], ray);
 		else if (objs[i]->type == 'P')
-			res = plane_intersects(minirt->camera->origin, objs[i], ray);
+			res = plane_intersects(*minirt->camera->origin, objs[i], ray);
 		if (res != 0 && res < point->dist)
 		{
 			point->obj = objs[i];
