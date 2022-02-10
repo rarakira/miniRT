@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:02:01 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/09 20:02:38 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/10 10:15:51 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int	in_shadow(t_minirt *minirt, t_point *point, t_light *light)
 	float		dist_to_light;
 	float		dist_to_obj;
 
-	intersect.hit_coord = vect_add(point->hit_coord, vect_mult(point->norm_v, 0.0001));
+	intersect.hit_coord = vect_add(point->hit_coord, vect_mult(point->norm_v, 0.00001));
 	intersect.norm_v = vect_substract(*light->point, intersect.hit_coord);
 	normalise_vect(&intersect.norm_v);
 	if (intersection_exists(minirt->objs, &intersect))

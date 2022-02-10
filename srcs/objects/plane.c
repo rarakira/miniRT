@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 13:13:15 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/09 19:38:30 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/10 10:14:21 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ float	plane_intersects(t_vector origin, t_object *obj, t_vector ray)
 		return (0);
 	obj->hit_point = vect_mult(ray, obj->dist);
 	obj->hit_norm_v = *obj->norm_v;
-	if (dot_r_nv < 0.0)
+	if (dot_r_nv > 0.0)
 		obj->hit_norm_v = vect_mult(obj->hit_norm_v, -1);
 	normalise_vect(&obj->hit_norm_v);
 	return (obj->dist);
