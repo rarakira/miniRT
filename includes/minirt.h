@@ -62,6 +62,28 @@ typedef struct s_minirt {
 	t_object	**objs;
 }				t_minirt;
 
+/* NEW STUCTs
+ *
+typedef struct s_scene
+{
+    t_ambient	ambient;
+    t_camera	camera;
+    t_light		**lights;
+    t_object	**objs;
+}				t_scene;
+
+typedef struct s_minirt {
+    void		*mlx;
+    void		*win;
+    void		*img;
+    char		*addr;
+    int			bits_per_pixel;
+    int			line_length;
+    int			endian;
+    t_scene 	scene;
+}				t_minirt;
+*/
+
 typedef struct s_vector
 {
 	float		x;
