@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 13:13:01 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/14 14:51:21 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/14 17:04:37 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ static int	get_caps(t_eq *caps, t_object *obj, t_vector ray)
 		hit[1] = vect_mult(ray, caps->dist2);
 		orig_pl2 = vect_add(*obj->center, vect_mult(*obj->norm_v, caps->m2));
 	}
-	res[0] = (caps->dist1 >= MIN_DIST && fabs(point_distance(hit[0], orig_pl1)) <= obj->radius);
-	res[1] = (caps->dist2 >= MIN_DIST && fabs(point_distance(hit[1], orig_pl2)) <= obj->radius);
+	res[0] = (caps->dist1 >= MIN_DIST && fabs(point_dist(hit[0], orig_pl1)) <= obj->radius);
+	res[1] = (caps->dist2 >= MIN_DIST && fabs(point_dist(hit[1], orig_pl2)) <= obj->radius);
 	if (!res[0] && !res[1])
 		return (0);
 	if ((res[0] && res[1] && caps->dist2 < caps->dist1) || !res[0])
@@ -67,7 +67,7 @@ static int	get_caps(t_eq *caps, t_object *obj, t_vector ray)
 	return (1);
 }
 
-static float	get_distance(t_object *obj, t_vector ray, t_eq body)
+static float	get_dist(t_object *obj, t_vector ray, t_eq body)
 {
 	t_eq	caps;
 
@@ -85,7 +85,7 @@ static float	get_distance(t_object *obj, t_vector ray, t_eq body)
 	{
 		if (!get_caps(&caps, obj, ray) && !in_range(body.m1, obj->height) && !in_range(body.m2, obj->height))
 			return (0);
-		if (in_range(body.m1, obj->height) && (body.dist1 < caps.dist1 || caps.dist1 < MIN_DIST)) // 
+		if (in_range(body.m1, obj->height) && (body.dist1 < caps.dist1 || caps.dist1 < MIN_DIST))
 		{
 			obj->dist = body.dist1;
 			obj->m = body.m1;
@@ -132,7 +132,7 @@ static inline float	find_dists_cy(	t_object *obj,
 		eq.m1 = obj->height + 1.0;
 	if (eq.dist2 <= MIN_DIST)
 		eq.m2 = obj->height + 1.0;
-	return (get_distance(obj, ray, eq));
+	return (get_dist(obj, ray, eq));
 }
 
 float	cylinder_intersects(t_vector origin, t_object *obj, t_vector ray)

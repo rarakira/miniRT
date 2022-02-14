@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:38:56 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/09 19:37:34 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/14 17:44:58 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,20 @@ static inline float	find_dists(t_object *obj, t_vector ray, t_eq eq)
 	eq.discr = sqrt(eq.discr);
 	eq.dist1 = (-eq.b - eq.discr) / (2 * eq.a);
 	eq.dist2 = (-eq.b + eq.discr) / (2 * eq.a);
+	obj->is_inside = 1;
 	if (eq.dist1 > MIN_DIST || eq.dist2 > MIN_DIST)
 	{
 		if (eq.dist1 > MIN_DIST && eq.dist2 > MIN_DIST)
+		{
 			obj->dist = fmin(eq.dist1, eq.dist2);
+			obj->is_inside = 0;
+		}
 		else if (eq.dist1 > MIN_DIST)
 			obj->dist = eq.dist1;
 		else
 			obj->dist = eq.dist2;
 		obj->hit_point = vect_mult(ray, obj->dist);
-		obj->hit_norm_v = vect_substract(obj->hit_point, *obj->center);
-		normalise_vect(&obj->hit_norm_v);
+		obj->hit_norm_v = get_hit_direction(obj, ray);
 		return (obj->dist);
 	}
 	return (0);

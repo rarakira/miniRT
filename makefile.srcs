@@ -5,52 +5,59 @@ MAIN			=	main.c error_exit.c
 # PARSER
 PARSER_DIR		=	parser
 PARSER			=	$(addprefix $(PARSER_DIR)/, \
-                    parser.c \
-                    string_to_float.c)
+					parser.c \
+					string_to_float.c)
 # end PARSER
 
 # VECTORS
 VECTOR_DIR		=	vectors
 VECTORS			=	$(addprefix $(VECTOR_DIR)/, \
-                    vectors.c \
-                    vectors_operations.c)
+					vectors.c \
+					vectors_operations.c\
+					vectors_distance.c)
 # end VECTORS
 
 # OBJECTS
 OBJECT_DIR		=	objects
 OBJECTS			=	$(addprefix $(OBJECT_DIR)/, \
-                    ambient.c \
-                    camera.c \
-                    cylinder.c \
-                    light.c \
-                    object.c \
-                    object_intersection.c \
-                    plane.c \
-                    sphere.c)
+					ambient.c \
+					camera.c \
+					cylinder.c \
+					object.c \
+					object_intersection.c \
+					plane.c \
+					sphere.c)
 # end OBJECTS
 
 # HOOKS
 HOOK_DIR		=	hooks
 HOOKS			=	$(addprefix $(HOOK_DIR)/, \
-register_hooks.c	register_hooks_utils.c)
+					register_hooks.c \
+					register_hooks_utils.c)
 # end HOOKS
 
 # RAY_TRACING
 RAY_TRACING_DIR		=	ray_tracing
 RAY_TRACING			=	$(addprefix $(RAY_TRACING_DIR)/, \
-ray_tracing.c)
+						ray_tracing.c)
 # end RAY_TRACING
 
 # DRAWING
 DRAWING_DIR		=	draw_pixels
 DRAWING			=	$(addprefix $(DRAWING_DIR)/, \
-draw_pixels.c)
+					draw_pixels.c)
 # end DRAWING
 
 # COLOURS
 COLOURS_DIR		=	colours
 COLOURS			=	$(addprefix $(COLOURS_DIR)/, \
-colours.c)
+					colours.c)
 # end COLOURS
 
-SRCS			=	$(MAIN) $(PARSER) $(VECTORS) $(OBJECTS) $(HOOKS) $(RAY_TRACING) $(DRAWING) $(COLOURS)
+# LIGHTS
+LIGHTS_DIR		=	lights
+LIGHTS			=	$(addprefix $(LIGHTS_DIR)/, \
+					light.c)
+# end LIGHTS
+
+SRCS			=	$(MAIN) $(PARSER) $(VECTORS) $(OBJECTS) $(HOOKS) $(RAY_TRACING) $(DRAWING) $(COLOURS) $(LIGHTS)

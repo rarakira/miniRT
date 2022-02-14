@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:30:24 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/08 18:10:26 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/14 15:17:20 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_object
 	float				height;
 	t_rgb				rgb; // rgb -> hex conversion
 	int					colour;
+	short				is_inside;
 	struct s_object		*next;
 	struct s_object		*previous;
 }						t_object;

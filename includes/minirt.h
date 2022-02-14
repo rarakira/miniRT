@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 18:42:37 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/10 19:29:01 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/14 17:37:20 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,12 @@ void		object_intersects(	t_minirt *minirt,
 float		sphere_intersects(t_vector origin, t_object *obj, t_vector ray);
 float		plane_intersects(t_vector origin, t_object *obj, t_vector ray);
 float		cylinder_intersects(t_vector origin, t_object *obj, t_vector ray);
+t_vector	get_hit_direction(t_object *obj, t_vector ray);
+
+/* light functions */
+int			in_shadow(t_minirt *minirt, t_point *point, t_light *light);
+void		add_specular(t_vector ray, t_point *point, t_light *light);
+void		add_light(t_minirt *minirt, t_point *point);
 
 /* vector functions */
 t_vector	*new_vect(float x, float y, float z);
@@ -134,6 +140,7 @@ t_vector	vect_mult(t_vector vect, float n);
 t_vector	vect_div(t_vector vect, float n);
 t_vector	reflect_vector(t_vector ray, t_vector norm);
 float		vector_scalar(t_vector v1, t_vector v2);
-float		point_distance(t_vector v1, t_vector v2);
+float		point_dist(t_vector v1, t_vector v2);
+float		vect_dist(t_vector v1, t_vector v2);
 
 #endif
