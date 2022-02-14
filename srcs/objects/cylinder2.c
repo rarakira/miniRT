@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 13:13:01 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/14 12:01:34 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/14 12:41:35 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,18 @@ static int	get_caps(t_eq *caps, t_object *obj, t_vector ray)
 		obj->hit_point = vect_mult(ray, caps->dist2);
 		orig_pl2 = vect_add(*obj->center, vect_mult(*obj->norm_v, caps->m2));
 	}
-	// printf("caps: caps.d1 = %f, caps.d2 = %f\n", caps->dist1, caps->dist2);
 	res[0] = (caps->dist1 >= MIN_DIST && fabs(point_distance(obj->hit_point, orig_pl1)) <= obj->radius);
 	res[1] = (caps->dist2 >= MIN_DIST && fabs(point_distance(obj->hit_point, orig_pl2)) <= obj->radius);
 	if (!res[0] && !res[1])
 		return (0);
-	if ((res[0] && res[1] && caps->dist2 < caps->dist1) || res[1])
+	printf("BEFORE: caps.d1 = %f, caps.d2 = %f\n point_dist1 = %f, point_dist2 = %f\n", caps->dist1, caps->dist2, point_distance(obj->hit_point, orig_pl1), point_distance(obj->hit_point, orig_pl2));
+	if ((res[0] && res[1] && caps->dist2 < caps->dist1) || !res[0])
 	{
+		printf("IN: caps.d1 = %f (r = %d), caps.d2 = %f (r = %d)\n", caps->dist1, res[0], caps->dist2, res[1]);
 		caps->dist1 = caps->dist2;
 		caps->m1 = caps->m2;
 	}
+	printf("AFTER: caps.d1 = %f, caps.d2 = %f\n", caps->dist1, caps->dist2);
 	// printf("caps: caps.d1 = %f, caps.d2 = %f\n", caps->dist1, caps->dist2);
 	return (1);
 }
