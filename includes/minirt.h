@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 18:42:37 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/09 18:53:41 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/10 19:29:01 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define WIN_HEIGHT	800
 
 # define MIN_DIST	0.0001
-# define MAX_DIST	100000000.0
+# define MAX_DIST	1000000000.0
 
 # define COL_RED		0x00D13632
 # define COL_ORANGE		0x00E2571E
@@ -134,5 +134,6 @@ t_vector	vect_mult(t_vector vect, float n);
 t_vector	vect_div(t_vector vect, float n);
 t_vector	reflect_vector(t_vector ray, t_vector norm);
 float		vector_scalar(t_vector v1, t_vector v2);
+float		point_distance(t_vector v1, t_vector v2);
 
 #endif

@@ -21,7 +21,7 @@ OBJECT_DIR		=	objects
 OBJECTS			=	$(addprefix $(OBJECT_DIR)/, \
                     ambient.c \
                     camera.c \
-                    cylinder.c \
+                    cylinder2.c \
                     light.c \
                     object.c \
                     object_intersection.c \
