@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 13:13:15 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/15 13:14:56 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/15 14:06:41 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ float	plane_intersects(t_vector origin, t_object *obj, t_vector ray)
 	if (obj->hit.dist < MIN_DIST || obj->hit.dist > MAX_DIST)
 		return (0);
 	obj->hit.point = vect_mult(ray, obj->hit.dist);
-	obj->hit.norm_v = get_hit_direction(obj, ray);
 	return (obj->hit.dist);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 18:42:37 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/14 17:37:20 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/15 15:00:40 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,33 @@
 # define COL_VIOLET		0x00503FA9
 # define COL_BLACK		0x002B2B2A
 
-int							g_obj_n;
+int									g_obj_n;
 
-typedef struct s_minirt		t_minirt;
-typedef struct s_vector		t_vector;
-typedef struct s_point		t_point;
-typedef struct s_ambient	t_ambient;
-typedef struct s_camera		t_camera;
-typedef struct s_light		t_light;
-typedef struct s_object		t_object;
-typedef struct s_scene		t_scene;
-typedef struct s_rgb		t_rgb;
+typedef struct s_minirt				t_minirt;
+typedef struct s_vector				t_vector;
+typedef struct s_point				t_point;
+typedef struct s_ambient			t_ambient;
+typedef struct s_camera				t_camera;
+typedef struct s_light				t_light;
+typedef struct s_object				t_object;
+typedef struct s_scene				t_scene;
+typedef struct s_rgb				t_rgb;
+typedef struct s_intersection		t_intersection;
+typedef struct s_eq					t_eq;
+
+enum e_types
+{
+	BODY	= 1,
+	CAP		= 2,
+};
+
+enum e_objects
+{
+	CYLINDER	= 1,
+	PLANE		= 2,
+	SPHERE		= 3,
+	CONE		= 4,
+};
 
 typedef struct s_rgb
 {
@@ -123,6 +139,7 @@ float		sphere_intersects(t_vector origin, t_object *obj, t_vector ray);
 float		plane_intersects(t_vector origin, t_object *obj, t_vector ray);
 float		cylinder_intersects(t_vector origin, t_object *obj, t_vector ray);
 t_vector	get_hit_direction(t_object *obj, t_vector ray);
+int			get_cylinder_caps(t_eq *caps, t_object *obj, t_vector ray);
 
 /* light functions */
 int			in_shadow(t_minirt *minirt, t_point *point, t_light *light);

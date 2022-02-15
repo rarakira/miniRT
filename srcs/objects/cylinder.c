@@ -6,12 +6,14 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 13:13:01 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/15 13:15:12 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/15 15:04:43 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
 
+#include "minirt.h"
+#include "objects.h"
 #include "../../includes/parsing.h"
 
 static int	in_range(float num, float range)
@@ -23,48 +25,10 @@ static int	in_range(float num, float range)
 	return (1);
 }
 
-static int	get_caps(t_eq *caps, t_object *obj, t_vector ray)
+static void	update_hit_point(t_intersection *hit, float dist, float m)
 {
-	float		dot_r_nv;
-	t_vector	orig_pl1;
-	t_vector	orig_pl2;
-	short		res[2];
-	t_vector	hit[2];
-
-	normalise_vect(obj->norm_v);
-	dot_r_nv = vect_dot_product(ray, *obj->norm_v);
-	if (dot_r_nv == 0 || fabs(dot_r_nv) < MIN_DIST)
-		return (0);
-	caps->m1 = obj->height;
-	caps->m2 = -obj->height;
-	orig_pl1 = vect_substract((t_vector){0, 0, 0},
-			vect_add(*obj->center, vect_mult(*obj->norm_v, caps->m1)));
-	orig_pl2 = vect_substract((t_vector){0, 0, 0},
-			vect_add(*obj->center, vect_mult(*obj->norm_v, caps->m2)));
-	caps->dist1 = -vect_dot_product(orig_pl1, *obj->norm_v) / dot_r_nv;
-	caps->dist2 = -vect_dot_product(orig_pl2, *obj->norm_v) / dot_r_nv;
-	if (caps->dist1 < MIN_DIST && caps->dist2 < MIN_DIST)
-		return (0);
-	if (caps->dist1 >= MIN_DIST)
-	{
-		hit[0] = vect_mult(ray, caps->dist1);
-		orig_pl1 = vect_add(*obj->center, vect_mult(*obj->norm_v, caps->m1));
-	}
-	if (caps->dist2 >= MIN_DIST)
-	{
-		hit[1] = vect_mult(ray, caps->dist2);
-		orig_pl2 = vect_add(*obj->center, vect_mult(*obj->norm_v, caps->m2));
-	}
-	res[0] = (caps->dist1 >= MIN_DIST && fabs(point_dist(hit[0], orig_pl1)) <= obj->radius);
-	res[1] = (caps->dist2 >= MIN_DIST && fabs(point_dist(hit[1], orig_pl2)) <= obj->radius);
-	if (!res[0] && !res[1])
-		return (0);
-	if ((res[0] && res[1] && caps->dist2 < caps->dist1) || !res[0])
-	{
-		caps->dist1 = caps->dist2;
-		caps->m1 = caps->m2;
-	}
-	return (1);
+	hit->dist = dist;
+	hit->m = m;
 }
 
 static float	get_dist(t_object *obj, t_vector ray, t_eq body)
@@ -72,46 +36,27 @@ static float	get_dist(t_object *obj, t_vector ray, t_eq body)
 	t_eq	caps;
 
 	ft_memset(&caps, 0, sizeof(t_eq));
+	obj->hit.type = BODY;
 	if (in_range(body.m1, obj->height) && in_range(body.m2, obj->height))
 	{
-		obj->hit.dist = body.dist1;
-		obj->hit.m = body.m1;
+		update_hit_point(&obj->hit, body.dist1, body.m1);
 		if (body.dist1 > body.dist2)
-			obj->hit.dist = body.dist2;
-		if (body.dist1 > body.dist2)
-			obj->hit.m = body.m2;
+			update_hit_point(&obj->hit, body.dist2, body.m2);
 	}
 	else
 	{
-		if (!get_caps(&caps, obj, ray) && !in_range(body.m1, obj->height) && !in_range(body.m2, obj->height))
+		if (!get_cylinder_caps(&caps, obj, ray) && !in_range(body.m1, obj->height) && !in_range(body.m2, obj->height))
 			return (0);
 		if (in_range(body.m1, obj->height) && (body.dist1 < caps.dist1 || caps.dist1 < MIN_DIST))
-		{
-			obj->hit.dist = body.dist1;
-			obj->hit.m = body.m1;
-		}
+			update_hit_point(&obj->hit, body.dist1, body.m1);
 		else if (in_range(body.m2, obj->height) &&  (body.dist2 < caps.dist1 || caps.dist1 < MIN_DIST))
-		{
-			obj->hit.dist = body.dist2;
-			obj->hit.m = body.m2;
-		}
+			update_hit_point(&obj->hit, body.dist2, body.m2);
 		else
 		{
-			obj->hit.dist = caps.dist1;
-			obj->hit.m = caps.m1;
-			obj->hit.point = vect_mult(ray, obj->hit.dist);
-			obj->hit.norm_v = *obj->norm_v;
-			if (vect_dot_product(ray, *obj->norm_v) > 0.0)
-				obj->hit.norm_v = vect_mult(obj->hit.norm_v, -1);
-			normalise_vect(&obj->hit.norm_v);
-			return (obj->hit.dist);
+			obj->hit.type = CAP;
+			update_hit_point(&obj->hit, caps.dist1, caps.m1);
 		}
 	}
-	obj->hit.point = vect_mult(ray, obj->hit.dist);
-	obj->hit.norm_v = vect_substract(obj->hit.point, *obj->center);
-	obj->hit.norm_v = vect_substract(obj->hit.norm_v,
-			vect_mult(*obj->norm_v, obj->hit.m));
-	normalise_vect(&obj->hit.norm_v);
 	return (obj->hit.dist);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:02:01 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/15 13:11:38 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/15 14:06:03 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,27 @@ t_vector	get_hit_direction(t_object *obj, t_vector ray)
 	else if (obj->type == 'C')
 	{
 		obj->hit.is_inside = 0;
+		if (obj->hit.type == BODY)
+		{
+			obj->hit.point = vect_mult(ray, obj->hit.dist);
+			obj->hit.norm_v = vect_substract(
+					vect_substract(obj->hit.point, *obj->center),
+					vect_mult(*obj->norm_v, obj->hit.m));
+		}
+		if (obj->hit.type == CAP)
+		{
+			obj->hit.point = vect_mult(ray, obj->hit.dist);
+			obj->hit.norm_v = *obj->norm_v;
+			if (vect_dot_product(ray, *obj->norm_v) > 0.0)
+				obj->hit.is_inside = 1;
+		}
 	}
 	else if (obj->type == 'P')
 	{
 		obj->hit.is_inside = 0;
 		obj->hit.norm_v = *obj->norm_v;
 		if (vect_dot_product(ray, *obj->norm_v) > 0.0)
-			obj->hit.norm_v = vect_mult(obj->hit.norm_v, -1);
+			obj->hit.is_inside = 1;
 	}
 	if (obj->hit.is_inside)
 		obj->hit.norm_v = vect_mult(obj->hit.norm_v, -1);
@@ -47,7 +61,7 @@ inline static void	update_point_colour(t_minirt *minirt, t_point *point, t_objec
 	}
 	point->rgb = obj->rgb;
 	point->colour = obj->colour;
-	point->norm_v = obj->hit.norm_v;
+	point->norm_v = get_hit_direction(obj, ray);
 	point->hit_coord = obj->hit.point;
 	point->type = obj->type;
 	if (in_shadow(minirt, point, minirt->light))

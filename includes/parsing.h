@@ -1,29 +1,21 @@
-//
-// Created by Dmitry Novikov on 25.01.2022.
-//
-
 #ifndef PARSING_H
-#define PARSING_H
+# define PARSING_H
 
-#include "../libs/libft/libft.h"
-#include "minirt.h"
-#include "objects.h"
-#include "error_msgs.h"
+# include <stdio.h>
+# include <fcntl.h>
+# include <unistd.h>
+# include <stdlib.h>
 
-#include <stdio.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdlib.h>
+# include "../libs/libft/libft.h"
+# include "minirt.h"
+# include "objects.h"
+# include "error_msgs.h"
 
+# define COLOR_ERROR "\033[31m"
+# define COLOR_OK "\033[32m"
+# define COLOR_END "\033[0m"
 
-
-#define COLOR_ERROR "\033[31m"
-#define COLOR_OK "\033[32m"
-#define COLOR_END "\033[0m"
-
-
-
-#define ERROR_RGB -1
+# define ERROR_RGB -1
 
 //typedef struct s_ambient
 //{

@@ -23,6 +23,7 @@ OBJECT_DIR		=	objects
 OBJECTS			=	$(addprefix $(OBJECT_DIR)/, \
 					object_intersection.c \
 					cylinder.c \
+					cylinder_caps.c \
 					plane.c \
 					sphere.c)
 # end OBJECTS

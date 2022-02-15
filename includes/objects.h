@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:30:24 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/15 13:18:27 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/15 15:00:26 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_light		t_light;
 typedef struct s_object		t_object;
 typedef struct s_scene		t_scene;
 typedef struct s_rgb		t_rgb;
+typedef struct s_eq			t_eq;
 
 typedef struct s_ambient
 {
@@ -44,20 +45,6 @@ typedef struct s_light
 	t_rgb		rgb; // rgb -> hex conversion
 	int			colour;
 }				t_light;
-
-enum e_types
-{
-	body,
-	cap,
-};
-
-enum e_objects
-{
-	CYLINDER,
-	PLANE,
-	SPHERE,
-	CONE,
-};
 
 typedef struct s_intersection
 {

@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:38:56 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/15 13:14:56 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/15 14:06:36 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static inline float	find_dists(t_object *obj, t_vector ray, t_eq eq)
 		else
 			obj->hit.dist = eq.dist2;
 		obj->hit.point = vect_mult(ray, obj->hit.dist);
-		obj->hit.norm_v = get_hit_direction(obj, ray);
 		return (obj->hit.dist);
 	}
 	return (0);
