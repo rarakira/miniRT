@@ -6,6 +6,7 @@ MAIN			=	main.c error_exit.c
 PARSER_DIR		=	parser
 PARSER			=	$(addprefix $(PARSER_DIR)/, \
 					parser.c \
+					object.c \
 					string_to_float.c)
 # end PARSER
 
@@ -20,11 +21,8 @@ VECTORS			=	$(addprefix $(VECTOR_DIR)/, \
 # OBJECTS
 OBJECT_DIR		=	objects
 OBJECTS			=	$(addprefix $(OBJECT_DIR)/, \
-					ambient.c \
-					camera.c \
-					cylinder.c \
-					object.c \
 					object_intersection.c \
+					cylinder.c \
 					plane.c \
 					sphere.c)
 # end OBJECTS
@@ -54,10 +52,12 @@ COLOURS			=	$(addprefix $(COLOURS_DIR)/, \
 					colours.c)
 # end COLOURS
 
-# LIGHTS
-LIGHTS_DIR		=	lights
-LIGHTS			=	$(addprefix $(LIGHTS_DIR)/, \
-					light.c)
-# end LIGHTS
+# SCENE
+SCENE_DIR		=	scene
+SCENE			=	$(addprefix $(SCENE_DIR)/, \
+					camera.c \
+					light.c \
+					ambient.c)
+# end SCENE
 
-SRCS			=	$(MAIN) $(PARSER) $(VECTORS) $(OBJECTS) $(HOOKS) $(RAY_TRACING) $(DRAWING) $(COLOURS) $(LIGHTS)
+SRCS			=	$(MAIN) $(PARSER) $(VECTORS) $(OBJECTS) $(HOOKS) $(RAY_TRACING) $(DRAWING) $(COLOURS) $(SCENE)

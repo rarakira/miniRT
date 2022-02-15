@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 13:13:01 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/14 17:04:37 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/15 13:15:12 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,12 @@ static float	get_dist(t_object *obj, t_vector ray, t_eq body)
 	ft_memset(&caps, 0, sizeof(t_eq));
 	if (in_range(body.m1, obj->height) && in_range(body.m2, obj->height))
 	{
-		obj->dist = body.dist1;
-		obj->m = body.m1;
+		obj->hit.dist = body.dist1;
+		obj->hit.m = body.m1;
 		if (body.dist1 > body.dist2)
-			obj->dist = body.dist2;
+			obj->hit.dist = body.dist2;
 		if (body.dist1 > body.dist2)
-			obj->m = body.m2;
+			obj->hit.m = body.m2;
 	}
 	else
 	{
@@ -87,32 +87,32 @@ static float	get_dist(t_object *obj, t_vector ray, t_eq body)
 			return (0);
 		if (in_range(body.m1, obj->height) && (body.dist1 < caps.dist1 || caps.dist1 < MIN_DIST))
 		{
-			obj->dist = body.dist1;
-			obj->m = body.m1;
+			obj->hit.dist = body.dist1;
+			obj->hit.m = body.m1;
 		}
 		else if (in_range(body.m2, obj->height) &&  (body.dist2 < caps.dist1 || caps.dist1 < MIN_DIST))
 		{
-			obj->dist = body.dist2;
-			obj->m = body.m2;
+			obj->hit.dist = body.dist2;
+			obj->hit.m = body.m2;
 		}
 		else
 		{
-			obj->dist = caps.dist1;
-			obj->m = caps.m1;
-			obj->hit_point = vect_mult(ray, obj->dist);
-			obj->hit_norm_v = *obj->norm_v;
+			obj->hit.dist = caps.dist1;
+			obj->hit.m = caps.m1;
+			obj->hit.point = vect_mult(ray, obj->hit.dist);
+			obj->hit.norm_v = *obj->norm_v;
 			if (vect_dot_product(ray, *obj->norm_v) > 0.0)
-				obj->hit_norm_v = vect_mult(obj->hit_norm_v, -1);
-			normalise_vect(&obj->hit_norm_v);
-			return (obj->dist);
+				obj->hit.norm_v = vect_mult(obj->hit.norm_v, -1);
+			normalise_vect(&obj->hit.norm_v);
+			return (obj->hit.dist);
 		}
 	}
-	obj->hit_point = vect_mult(ray, obj->dist);
-	obj->hit_norm_v = vect_substract(obj->hit_point, *obj->center);
-	obj->hit_norm_v = vect_substract(obj->hit_norm_v,
-			vect_mult(*obj->norm_v, obj->m));
-	normalise_vect(&obj->hit_norm_v);
-	return (obj->dist);
+	obj->hit.point = vect_mult(ray, obj->hit.dist);
+	obj->hit.norm_v = vect_substract(obj->hit.point, *obj->center);
+	obj->hit.norm_v = vect_substract(obj->hit.norm_v,
+			vect_mult(*obj->norm_v, obj->hit.m));
+	normalise_vect(&obj->hit.norm_v);
+	return (obj->hit.dist);
 }
 
 static inline float	find_dists_cy(	t_object *obj,

@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:30:24 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/14 15:17:20 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/15 13:18:27 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,30 @@ typedef struct s_light
 	int			colour;
 }				t_light;
 
+enum e_types
+{
+	body,
+	cap,
+};
+
+enum e_objects
+{
+	CYLINDER,
+	PLANE,
+	SPHERE,
+	CONE,
+};
+
+typedef struct s_intersection
+{
+	int			type;
+	t_vector	point;
+	t_vector	norm_v;
+	float		m;
+	float		dist;
+	short		is_inside;
+}				t_intersection;
+
 /*
 Types in *CAPITAL*:
 'S' = sphere, 'P' = plane, 'C' = cylinder
@@ -54,15 +78,12 @@ typedef struct s_object
 	char				type;
 	t_vector			*center;
 	t_vector			*norm_v;
-	t_vector			hit_point;
-	t_vector			hit_norm_v;
-	float				m;
-	float				dist;
 	float				radius;
 	float				height;
 	t_rgb				rgb; // rgb -> hex conversion
 	int					colour;
-	short				is_inside;
+
+	t_intersection		hit;
 	struct s_object		*next;
 	struct s_object		*previous;
 }						t_object;
