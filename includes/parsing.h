@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dredfort <dredfort@student.21-school.ru>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/15 15:27:03 by dredfort          #+#    #+#             */
+/*   Updated: 2022/02/15 17:45:49 by dredfort         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PARSING_H
 # define PARSING_H
 
@@ -6,92 +18,55 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-# include "../libs/libft/libft.h"
-# include "minirt.h"
-# include "objects.h"
-# include "error_msgs.h"
+# include "structure_prototypes.h"
 
-# define COLOR_ERROR "\033[31m"
-# define COLOR_OK "\033[32m"
-# define COLOR_END "\033[0m"
+/* scene_inits */
+t_light		*ft_light_init(t_scene *scene);
+t_object	*ft_object_init(t_scene *scene);
+t_light		**ft_lights_init(int i, t_scene *scene);
+t_object	**ft_objects_init(int i, t_scene *scene);
 
-# define ERROR_RGB -1
+/* scene_preparation */
+void		ft_prepare_scene(t_scene *scene);
 
-//typedef struct s_ambient
-//{
-//	float	lighting; //[0.0,1.0]
-//	short	rgb[3]; //[0-255][0-255][0-255]
-//} t_ambient;
-//
-////typedef struct s_camera
-////{
-////	float	x;
-////	float	y;
-////	float	z;
-////	float	ox; //[-1,1]
-////	float	oy; //[-1,1]
-////	float	oz; //[-1,1]
-////	char	fov; //[0,180]
-////} t_camera;
-//
-//typedef struct s_light
-//{
-//	float	x;
-//	float	y;
-//	float	z;
-//	float	brightness; //[0.0,1.0]
-//	char	r; //[0-255]
-//	char	g; //[0-255]
-//	char	b; //[0-255]
-//} t_light;
-//
-//typedef struct s_objects
-//{
-//	t_ambient	*ambient;
-//	t_camera	*camera;
-//	t_light		*light;
-//	char	identifier[2];
-//	float	x;
-//	float	y;
-//	float	z;
-//	float	ox; //[-1,1]
-//	float	oy; //[-1,1]
-//	float	oz; //[-1,1]
-//	float	d;
-//	float	h;
-//	char	r; //[0-255]
-//	char	g; //[0-255]
-//	char	b; //[0-255]
-//////	Sphere
-////	identifier: sp
-////	∗ x,y,z coordinates of the sphere center: 0.0,0.0,20.6
-////	∗ the sphere diameter: 12.6
-////	∗ R,G,B colors in range [0-255]: 10, 0, 255
-////
-//////	Plane
-////	identifier: pl
-////	∗ x,y,z coordinates: 0.0,0.0,-10.0
-////	∗ 3d normalized orientation vector. In range [-1,1] for each x,y,z axis:
-////			0.0,0.0,1.0
-////	∗ R,G,B colors in range [0-255]: 0, 0, 255
-////
-//////	Cylinder
-////	∗ identifier: cy
-////			cy 50.0,0.0,20.6 0.0,0.0,1.0 14.2 21.42 10,0,255
-////	∗ x,y,z coordinates: 50.0,0.0,20.6
-////	∗ 3d normalized orientation vector. In range [-1,1] for each x,y,z axis:
-////			0.0,0.0,1.0
-////	∗ the cylinder diameter: 14.2
-////	∗ the cylinder height: 21.42
-////	∗ R,G,B colors in range [0,255]: 10, 0, 255
-//
-//////	Cone, Hyperboloid, Paraboloid
-//
-//	struct s_objects *next;
-//} t_objects;
+/* scene_utilities */
+t_light		**ft_convert_lights2arr(t_scene *scene);
+t_object	**ft_convert_objects2arr(t_scene *scene);
+void		ft_light_as_object(t_scene *scene, t_light *light);
 
-void	ft_parsing(char *file_name, t_minirt *minirt);
-float	ft_atof(char *line, int *i);
-int		ft_rgb_hex(int t, t_rgb rgb);
+//parsing_scene.c
+void		ft_parsing_scene(int fd, int longest_line, t_scene *scene);
+
+//parsing_scene_properties.c
+char		ft_check_color(t_rgb c);
+char		ft_check_orientation(t_vector v);
+void		ft_parsing_ambient(t_scene *scene, char *str, int i);
+void		ft_parsing_camera(t_scene *scene, char *str, int i);
+void		ft_parsing_light(t_scene *scene, char *str, int i);
+
+//parsing_scene_objects.c
+void		ft_parsing_sphere(t_scene *scene, char *str, int i);
+void		ft_parsing_plane(t_scene *scene, char *str, int i);
+void		ft_parsing_cylinder(t_scene *scene, char *str, int i);
+void		ft_parsing_cone(t_scene *scene, char *str, int i);
+
+//utilities.c
+void		ft_check_next_parametr(char *str, int i, t_scene *scene);
+void		ft_count_separators(char *str, int *i, char *separator);
+t_vector	ft_parsing_vector(char *str, int *i, t_scene *scene);
+
+//utilities_atoi_atof.c
+int			ft_atoi(const char *str);
+float		ft_atof(char *str, int *i);
+
+//utilities_color.c
+t_rgb		ft_adjust_rgb(t_rgb color);
+int			ft_rgb2hex(char t, t_rgb color);
+t_rgb		ft_get_rgb(int r, int g, int b);
+t_rgb		ft_parsing_color(char *str, int i, t_scene *scene);
+
+//utilities_string.c
+size_t		ft_strlen(const char *s);
+int			ft_longest_line(int fd);
 
 #endif

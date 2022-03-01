@@ -6,23 +6,14 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 19:52:59 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/14 17:03:07 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/02/15 17:55:19 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <math.h>
 
-#include "mlx.h"
-#include "minirt.h"
-#include "error_msgs.h"
+#include "../../includes/minirt.h"
 
-/*
- * Вычитание векторов
- * a{a1, a2}; b{b1, b2}
- * c = a - b = c{a1-b1, a2-b2}
- */
 t_vector	vect_substract(t_vector v1, t_vector v2)
 {
 	t_vector	res;
@@ -63,11 +54,10 @@ t_vector	vect_div(t_vector vect, float n)
 	return (res);
 }
 
-/* Длина вектора */
 float	vect_len(t_vector vect)
 {
 	float	res;
 
-	res = sqrt(pow(vect.x, 2) + pow(vect.y, 2) + pow(vect.z, 2));
+	res = sqrt(vect_dot_product(vect, vect));
 	return (res);
 }

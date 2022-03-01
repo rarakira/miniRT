@@ -12,8 +12,10 @@ D_FILES			=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.d))
 
 INCLUDES		=	-Iincludes -I./libs/libft -I./libs/minilibx_macos
 
-H_FILES			=	includes/error_messages.h						\
-					includes/fdf.h									\
+H_FILES			=	includes/minirt.h								\
+					includes/parsing.h								\
+					includes/error.h								\
+					includes/structure_prototypes.h					\
 					libs/libft/libft.h								\
 					libs/libft/ft_printf.h							\
 					libs/minilibx_macos/mlx.h
@@ -36,7 +38,7 @@ CFLAGS			=	-Wall -Wextra -Werror
 
 XFLAGS			=	-framework OpenGL -framework AppKit
 
-OPTFLAGS		=	-MMD -MP -g
+OPTFLAGS		=	-MMD -MP -g -O2
 
 RM				=	rm -rf
 
@@ -72,6 +74,7 @@ clean :		$(dir $(LIB_FT))
 fclean :	clean
 			@$(RM) $(NAME)
 			@$(MAKE) clean -C $(XLIBDIR)
+			@#rm -rf objs
 			@rm -rf *.dSYM 
 			@echo "\033[1;38;5;221m*  miniRT program removed\033[0m"
 
