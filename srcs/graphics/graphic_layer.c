@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 16:33:23 by dredfort          #+#    #+#             */
-/*   Updated: 2022/02/28 21:52:42 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/03/01 20:29:10 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ void	ft_gl_init(t_minirt *minirt, t_scene *scene)
 			&minirt->line_length, &minirt->endian);
 	minirt->bits_per_pixel /= 8;
 	minirt->scene = *scene;
-	minirt->texture = ft_get_pattern(minirt, "./texture.xpm");
-	minirt->bump = ft_get_pattern(minirt, "./bump.xpm");
+	minirt->texture = ft_get_pattern(minirt, "./textures/texture.xpm");
+	minirt->bump = ft_get_pattern(minirt, "./textures/bump.xpm");
 	minirt->apply_texture = 0;
 	minirt->apply_bump = 0;
 	minirt->apply_checkerboard = 0;
