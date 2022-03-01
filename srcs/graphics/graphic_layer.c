@@ -28,9 +28,7 @@ static t_pattern	ft_get_pattern(t_minirt *minirt, char *filename)
 	if (tmp.img)
 		tmp.addr = mlx_get_data_addr(tmp.img, &tmp.bits_per_pixel,
 				&tmp.size_line, &tmp.endian);
-	if (tmp.img && tmp.addr)
-		printf(TC_OK"%s pattern loaded successfully"TC_END"\n", filename);
-	else
+	if (!tmp.img || !tmp.addr)
 		printf(TC_ERROR"Failed to load %s pattern"TC_END"\n", filename);
 	return (tmp);
 }
@@ -46,8 +44,8 @@ void	ft_gl_init(t_minirt *minirt, t_scene *scene)
 			&minirt->line_length, &minirt->endian);
 	minirt->bits_per_pixel /= 8;
 	minirt->scene = *scene;
-	minirt->texture = ft_get_pattern(minirt, "./textures/texture.xpm");
-	minirt->bump = ft_get_pattern(minirt, "./textures/bump.xpm");
+	minirt->texture = ft_get_pattern(minirt, "./patterns/texture.xpm");
+	minirt->bump = ft_get_pattern(minirt, "./patterns/bump.xpm");
 	minirt->apply_texture = 0;
 	minirt->apply_bump = 0;
 	minirt->apply_checkerboard = 0;

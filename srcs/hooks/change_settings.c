@@ -15,7 +15,7 @@
 void	ft_change_radius(t_minirt *minirt, char sign)
 {
 	if (minirt->scene.object && minirt->scene.object->type != 'L'
-		&& ((minirt->scene.object->radius > 0 && sign < 0) || sign > 0))
+		&& ((minirt->scene.object->radius > 0.1 && sign < 0) || sign > 0))
 		minirt->scene.object->radius += 0.05 * sign;
 	ray_tracing(minirt);
 	mlx_put_image_to_window(minirt->mlx, minirt->win, minirt->img, 0, 0);
@@ -24,7 +24,7 @@ void	ft_change_radius(t_minirt *minirt, char sign)
 void	ft_change_height(t_minirt *minirt, char sign)
 {
 	if (minirt->scene.object
-		&& ((minirt->scene.object->height > 0 && sign < 0) || sign > 0))
+		&& ((minirt->scene.object->height > 0.1 && sign < 0) || sign > 0))
 		minirt->scene.object->height += 0.1 * sign;
 	ray_tracing(minirt);
 	mlx_put_image_to_window(minirt->mlx, minirt->win, minirt->img, 0, 0);
