@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_scene.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dredfort <dredfort@student.21-school.ru>   +#+  +:+       +#+        */
+/*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 17:50:31 by dredfort          #+#    #+#             */
-/*   Updated: 2022/02/23 11:39:50 by dredfort         ###   ########.fr       */
+/*   Updated: 2022/03/01 20:11:13 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libs/libft/libft.h"
 #include "../../includes/minirt.h"
 #include "../../includes/parsing.h"
 #include "../../includes/error.h"

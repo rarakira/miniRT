@@ -6,13 +6,12 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 08:04:12 by lbaela            #+#    #+#             */
-/*   Updated: 2022/03/01 17:35:57 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/03/01 20:10:57 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
 
-#include "../../libs/libft/libft.h"
 #include "../../includes/minirt.h"
 
 static int	in_range(float num, float range)

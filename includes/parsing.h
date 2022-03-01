@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dredfort <dredfort@student.21-school.ru>   +#+  +:+       +#+        */
+/*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 15:27:03 by dredfort          #+#    #+#             */
-/*   Updated: 2022/02/15 17:45:49 by dredfort         ###   ########.fr       */
+/*   Updated: 2022/03/01 20:17:18 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void		ft_parsing_cone(t_scene *scene, char *str, int i);
 void		ft_check_next_parametr(char *str, int i, t_scene *scene);
 void		ft_count_separators(char *str, int *i, char *separator);
 t_vector	ft_parsing_vector(char *str, int *i, t_scene *scene);
+char		*ft_strnstr(const char *haystack, const char *needle, size_t len);
+void		*ft_memset(void *b, int c, size_t len);
 
 //utilities_atoi_atof.c
 int			ft_atoi(const char *str);
@@ -68,5 +70,6 @@ t_rgb		ft_parsing_color(char *str, int i, t_scene *scene);
 //utilities_string.c
 size_t		ft_strlen(const char *s);
 int			ft_longest_line(int fd);
+int			ft_strncmp(const char *s1, const char *s2, size_t n);
 
 #endif

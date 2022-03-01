@@ -16,15 +16,7 @@ H_FILES			=	includes/minirt.h								\
 					includes/parsing.h								\
 					includes/error.h								\
 					includes/structure_prototypes.h					\
-					libs/libft/libft.h								\
-					libs/libft/ft_printf.h							\
 					libs/minilibx_macos/mlx.h
-
-FTLIB			=	ft
-
-FTLIBDIR		=	libs/libft
-
-LIB_FT			=	$(FTLIBDIR)/libft.a
 
 XLIB			=	mlx
 
@@ -42,10 +34,10 @@ OPTFLAGS		=	-MMD -MP -g -O2
 
 RM				=	rm -rf
 
-all : $(dir $(LIB_FT)) $(dir $(LIB_MLX)) $(NAME)
+all : $(dir $(LIB_MLX)) $(NAME)
 
-$(NAME) : $(OBJS) $(LIB_FT) $(LIB_MLX)
-		$(CC) $(OBJS) -L$(FTLIBDIR) -l$(FTLIB) -L$(XLIBDIR) -l$(XLIB) $(XFLAGS) -o $(NAME)
+$(NAME) : $(OBJS) $(LIB_MLX)
+		$(CC) $(OBJS) -L$(XLIBDIR) -l$(XLIB) $(XFLAGS) -o $(NAME)
 
 .SECONDEXPANSION:
 ${OBJS} :	$$(patsubst %.o, %.c, $$(subst ${OBJS_DIR}/, ${SRCS_DIR}/, $${@}))
@@ -56,12 +48,6 @@ ${OBJS} :	$$(patsubst %.o, %.c, $$(subst ${OBJS_DIR}/, ${SRCS_DIR}/, $${@}))
 
 norm :
 			@norminette  srcs/* includes/*
-
-norm_full :	norm
-			@norminette libs/libft/*
-
-$(dir $(LIB_FT)) :
-			@make -C $@ $(MAKECMDGOALS)
 
 $(dir $(LIB_MLX)) :
 			@make -C $@ $(MAKECMDGOALS)
@@ -80,4 +66,4 @@ fclean :	clean
 
 re :		fclean all
 
-.PHONY: all clean fclean $(dir $(LIB_FT)) $(dir $(LIB_MLX)) re norm norm_full
+.PHONY: all clean fclean $(dir $(LIB_MLX)) re norm

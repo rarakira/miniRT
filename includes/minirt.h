@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 18:42:37 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/28 21:45:40 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/03/01 20:21:11 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define COL_VIOLET		0x00503FA9
 # define COL_BLACK		0x002B2B2A
 
+# include <stdio.h>
 # include "structure_prototypes.h"
 
 void		ft_print_scene(t_scene *scene);
@@ -54,6 +55,7 @@ void		ft_register_hooks(t_minirt *minirt);
 /* error and memory handling */
 int			free_minirt(t_minirt *minirt);
 void		exit_on_error(int err, char *msg);
+void		*ft_memset(void *b, int c, size_t len);
 
 /* graphics */
 void		ft_graphic_layer(t_scene *scene);

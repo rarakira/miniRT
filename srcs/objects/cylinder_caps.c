@@ -6,13 +6,12 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 13:13:01 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/28 17:15:15 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/03/01 20:11:05 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
 
-#include "../../libs/libft/libft.h"
 #include "../../includes/minirt.h"
 
 static int	solve_caps(t_eq *caps, t_object *obj, t_vector ray)
