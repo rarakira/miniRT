@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_scene_objects.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dredfort <dredfort@student.21-school.ru>   +#+  +:+       +#+        */
+/*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 16:01:54 by dredfort          #+#    #+#             */
-/*   Updated: 2022/02/16 10:02:50 by dredfort         ###   ########.fr       */
+/*   Updated: 2022/03/02 09:25:15 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_parsing_plane(t_scene *scene, char *str, int i)
 	if (ft_check_orientation(scene->object->norm_v))
 		ft_error(EM_PLANE_ORIENT, scene);
 	if (vect_len(scene->object->norm_v) != 1)
-		ft_error(EM_PLANE_NNORM, scene);
+		ft_normal_error(EM_PLANE_NNORM, &scene->object->norm_v);
 	ft_check_next_parametr(str, i, scene);
 	scene->object->rgb = ft_parsing_color(str, i, scene);
 	if (ft_check_color(scene->object->rgb))
@@ -56,7 +56,7 @@ void	ft_parsing_cylinder(t_scene *scene, char *str, int i)
 	if (ft_check_orientation(scene->object->norm_v))
 		ft_error(EM_CLND_ORIENT, scene);
 	if (vect_len(scene->object->norm_v) != 1)
-		ft_error(EM_CLND_NNORM, scene);
+		ft_normal_error(EM_CLND_NNORM, &scene->object->norm_v);
 	ft_check_next_parametr(str, i, scene);
 	scene->object->radius = ft_atof(str, &i) / 2;
 	ft_check_next_parametr(str, i, scene);
@@ -77,7 +77,7 @@ void	ft_parsing_cone(t_scene *scene, char *str, int i)
 	if (ft_check_orientation(scene->object->norm_v))
 		ft_error(EM_CONE_ORIENT, scene);
 	if (vect_len(scene->object->norm_v) != 1)
-		ft_error(EM_CONE_NNORM, scene);
+		ft_normal_error(EM_CONE_NNORM, &scene->object->norm_v);
 	ft_check_next_parametr(str, i, scene);
 	scene->object->radius = ft_atof(str, &i) / 2;
 	ft_check_next_parametr(str, i, scene);

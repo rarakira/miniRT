@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dredfort <dredfort@student.21-school.ru>   +#+  +:+       +#+        */
+/*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 15:45:03 by dredfort          #+#    #+#             */
-/*   Updated: 2022/02/15 17:46:10 by dredfort         ###   ########.fr       */
+/*   Updated: 2022/03/02 09:23:29 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,5 @@ typedef struct s_scene				t_scene;
 
 void	ft_free_scene(t_scene *scene);
 void	ft_error(char *error_type, t_scene *scene);
+void	ft_normal_error(char *error_type, t_vector *norm_v);
 #endif

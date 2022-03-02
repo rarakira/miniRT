@@ -6,7 +6,7 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 18:42:37 by lbaela            #+#    #+#             */
-/*   Updated: 2022/03/01 20:21:11 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/03/02 09:23:01 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void		ft_put_pixel(t_minirt *gl, int x, int y, int color);
 void		my_mlx_pixel_put(t_minirt *minirt, int x, int y, int color);
 void		fill_background(t_minirt *minirt);
 
-//COLORS
+/* colors */
 int			ft_rgb_hex(int t, t_rgb rgb);
 t_rgb		ft_get_rgb(int r, int g, int b);
 t_rgb		ft_rgb2gray(t_rgb rgb);
@@ -49,12 +49,8 @@ t_rgb		ft_rgb_brightness_adjustment(t_rgb rgb, float adjust);
 
 /* hooks */
 void		ft_register_hooks(t_minirt *minirt);
-//void		register_hooks(t_minirt *minirt);
-//int			key_hook(int keycode, t_minirt *minirt);
 
-/* error and memory handling */
-int			free_minirt(t_minirt *minirt);
-void		exit_on_error(int err, char *msg);
+/* memory handling */
 void		*ft_memset(void *b, int c, size_t len);
 
 /* graphics */

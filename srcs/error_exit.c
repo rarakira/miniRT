@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dredfort <dredfort@student.21-school.ru>   +#+  +:+       +#+        */
+/*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:24:04 by dredfort          #+#    #+#             */
-/*   Updated: 2022/02/15 17:49:41 by dredfort         ###   ########.fr       */
+/*   Updated: 2022/03/02 09:23:21 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,11 @@ void	ft_error(char *error_type, t_scene *scene)
 	if (scene)
 		ft_free_scene(scene);
 	exit(1);
+}
+
+void	ft_normal_error(char *error_type, t_vector *norm_v)
+{
+	printf(TC_ERROR"Error\n"TC_END);
+	printf("%s\n", error_type);
+	normalise_vect(norm_v);
 }
