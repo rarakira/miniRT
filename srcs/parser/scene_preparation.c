@@ -16,9 +16,9 @@
 
 void	ft_point_shift(t_vector *point, t_vector *shift)
 {
-	point->x += shift->x;
-	point->y += shift->y;
-	point->z += shift->z;
+	point->x += -shift->x;
+	point->y += -shift->y;
+	point->z += -shift->z;
 }
 
 void	ft_shift_camera(t_scene *scene)
