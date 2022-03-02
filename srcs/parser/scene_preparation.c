@@ -35,6 +35,8 @@ void	ft_shift_camera(t_scene *scene)
 	while (scene->objs[i])
 	{
 		ft_point_shift(&scene->objs[i]->center, &scene->camera.point);
+		if (scene->objs[i]->type != LIGHT && scene->objs[i]->type != SPHERE)
+			ft_point_shift(&scene->objs[i]->norm_v, &scene->camera.point);
 		i++;
 	}
 	scene->camera.point.x = 0;
