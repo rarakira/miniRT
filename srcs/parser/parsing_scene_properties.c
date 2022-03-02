@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_scene_properties.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dredfort <dredfort@student.21-school.ru>   +#+  +:+       +#+        */
+/*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 17:57:01 by dredfort          #+#    #+#             */
-/*   Updated: 2022/02/15 17:58:00 by dredfort         ###   ########.fr       */
+/*   Updated: 2022/03/02 09:51:38 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	ft_parsing_camera(t_scene *scene, char *str, int i)
 	if (ft_check_orientation(scene->camera.orientation))
 		ft_error(EM_CAMERA_ORIENT, scene);
 	if (vect_len(scene->camera.orientation) != 1)
-		ft_error(EM_CAMERA_NNORM, scene);
+		ft_normal_error(EM_CAMERA_NNORM, &scene->camera.orientation);
 	ft_check_next_parametr(str, i, scene);
 	scene->camera.fov = ft_atof(str, &i);
 	if (scene->camera.fov < 0 || scene->camera.fov > 180)
