@@ -15,6 +15,7 @@ PARSER			=	$(addprefix $(PARSER_DIR)/, \
         			utilities.c \
         			utilities_atoi_atof.c \
         			utilities_color.c \
+        			utilities_rotation.c \
         			utilities_string.c)
 # end PARSER
 

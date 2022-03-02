@@ -53,6 +53,9 @@ void	ft_lights_y_axis_rotation(t_light **lights, float cos_a, float sin_a);
 //ROTATION
 void	ft_x_rotation(t_minirt *minirt, char direction);
 void	ft_y_rotation(t_minirt *minirt, char direction);
+void	ft_x_camera_rotation(t_scene *scene);
+void	ft_y_camera_rotation(t_scene *scene);
+void	ft_z_camera_rotation(t_scene *scene);
 
 //CHANGE_SETTINGS
 void	ft_change_radius(t_minirt *minirt, char sign);
