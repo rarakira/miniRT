@@ -39,6 +39,8 @@ all : $(dir $(LIB_MLX)) $(NAME)
 $(NAME) : $(OBJS) $(LIB_MLX)
 		$(CC) $(OBJS) -L$(XLIBDIR) -l$(XLIB) $(XFLAGS) -o $(NAME)
 
+bonus : all
+
 .SECONDEXPANSION:
 ${OBJS} :	$$(patsubst %.o, %.c, $$(subst ${OBJS_DIR}/, ${SRCS_DIR}/, $${@}))
 			@mkdir -p ${@D}
@@ -66,4 +68,4 @@ fclean :	clean
 
 re :		fclean all
 
-.PHONY: all clean fclean $(dir $(LIB_MLX)) re norm
+.PHONY: all bonus clean fclean $(dir $(LIB_MLX)) re norm
