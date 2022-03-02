@@ -28,6 +28,7 @@ t_object	**ft_objects_init(int i, t_scene *scene);
 
 /* scene_preparation */
 void		ft_prepare_scene(t_scene *scene);
+void		ft_camera_rotation(t_scene *scene);
 
 /* scene_utilities */
 t_light		**ft_convert_lights2arr(t_scene *scene);

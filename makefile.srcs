@@ -10,6 +10,7 @@ PARSER			=	$(addprefix $(PARSER_DIR)/, \
        				parsing_scene_properties.c \
        				scene_inits.c \
        				scene_preparation.c \
+       				scene_rotation.c \
        				scene_utilities.c \
         			utilities.c \
         			utilities_atoi_atof.c \

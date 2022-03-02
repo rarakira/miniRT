@@ -29,6 +29,30 @@ void	ft_shift_camera(t_scene *scene)
 	while (scene->counter.lights && scene->lights[i])
 	{
 		ft_point_shift(&scene->lights[i]->point, &scene->camera.point);
+		ft_point_shift(&scene->lights[i]->point, &scene->camera.orientation);
+		i++;
+	}
+	i = 0;
+	while (scene->objs[i])
+	{
+		ft_point_shift(&scene->objs[i]->center, &scene->camera.point);
+		if (scene->objs[i]->type != LIGHT && scene->objs[i]->type != SPHERE)
+			ft_point_shift(&scene->objs[i]->norm_v, &scene->camera.point);
+		i++;
+	}
+	scene->camera.point.x = 0;
+	scene->camera.point.y = 0;
+	scene->camera.point.z = 0;
+}
+
+void	ft_rotate_camera(t_scene *scene)
+{
+	int	i;
+
+	i = 0;
+	while (scene->counter.lights && scene->lights[i])
+	{
+		ft_point_shift(&scene->lights[i]->point, &scene->camera.point);
 		i++;
 	}
 	i = 0;
@@ -60,4 +84,5 @@ void	ft_prepare_scene(t_scene *scene)
 	scene->light = 0;
 	scene->object = 0;
 	ft_shift_camera(scene);
+	ft_camera_rotation(scene);
 }
