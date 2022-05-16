@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   colours.c                                          :+:      :+:    :+:   */
+/*   colors.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,16 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
-#include "objects.h"
+#include "../../includes/minirt.h"
 
-t_rgb	calc_rgb_light(t_rgb colour, double light)
+t_rgb	calc_rgb_light(t_rgb color, double light)
 {
 	t_rgb	new;
 
-	new.r = (int)((double)colour.r * light);
-	new.g = (int)((double)colour.g * light);
-	new.b = (int)((double)colour.b * light);
+	new.r = (int)((double)color.r * light);
+	new.g = (int)((double)color.g * light);
+	new.b = (int)((double)color.b * light);
 	if (new.r > 255)
 		new.r = 255;
 	if (new.g > 255)
@@ -31,26 +30,36 @@ t_rgb	calc_rgb_light(t_rgb colour, double light)
 
 t_rgb	multiply_rgbs(t_rgb a, t_rgb b)
 {
-	t_rgb	colour;
+	t_rgb	color;
 
-	colour.r = a.r * b.r / 255;
-	colour.g = a.g * b.g / 255;
-	colour.b = a.b * b.b / 255;
-	return (colour);
+	color.r = a.r * b.r / 255;
+	color.g = a.g * b.g / 255;
+	color.b = a.b * b.b / 255;
+	return (color);
 }
 
 t_rgb	add_rgb_light(t_rgb a, t_rgb b)
 {
-	t_rgb	colour;
+	t_rgb	color;
 
-	colour.r = a.r + b.r;
-	colour.g = a.g + b.g;
-	colour.b = a.b + b.b;
-	if (colour.r > 255)
-		colour.r = 255;
-	if (colour.g > 255)
-		colour.g = 255;
-	if (colour.b > 255)
-		colour.b = 255;
-	return (colour);
+	color.r = a.r + b.r;
+	color.g = a.g + b.g;
+	color.b = a.b + b.b;
+	if (color.r > 255)
+		color.r = 255;
+	if (color.g > 255)
+		color.g = 255;
+	if (color.b > 255)
+		color.b = 255;
+	return (color);
+}
+
+t_rgb	invert_color(t_rgb color)
+{
+	return ((t_rgb){255 - color.r, 255 - color.g, 255 - color.b});
+}
+
+int	ft_rgb_hex(int t, t_rgb rgb)
+{
+	return (t << 24 | rgb.r << 16 | rgb.g << 8 | rgb.b);
 }

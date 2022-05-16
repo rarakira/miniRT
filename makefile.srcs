@@ -5,52 +5,65 @@ MAIN			=	main.c error_exit.c
 # PARSER
 PARSER_DIR		=	parser
 PARSER			=	$(addprefix $(PARSER_DIR)/, \
-                    parser.c \
-                    string_to_float.c)
+					parsing_scene.c \
+        			parsing_scene_objects.c \
+       				parsing_scene_properties.c \
+       				scene_inits.c \
+       				scene_preparation.c \
+       				scene_rotation.c \
+       				scene_utilities.c \
+        			utilities.c \
+        			utilities_atoi_atof.c \
+        			utilities_color.c \
+        			utilities_rotation.c \
+        			utilities_string.c)
 # end PARSER
 
 # VECTORS
 VECTOR_DIR		=	vectors
 VECTORS			=	$(addprefix $(VECTOR_DIR)/, \
-                    vectors.c \
-                    vectors_operations.c)
+					vectors.c \
+					vectors_operations.c \
+					vector_rotation.c)
 # end VECTORS
 
 # OBJECTS
 OBJECT_DIR		=	objects
 OBJECTS			=	$(addprefix $(OBJECT_DIR)/, \
-                    ambient.c \
-                    camera.c \
-                    cylinder.c \
-                    light.c \
-                    object.c \
-                    object_intersection.c \
-                    plane.c \
-                    sphere.c)
+					object_intersection.c \
+					cylinder.c \
+					cylinder_caps.c \
+					plane.c \
+					sphere.c \
+					cone.c)
 # end OBJECTS
+
+# GRAPHICS
+GRAPHICS_DIR		=	graphics
+GRAPHICS			=	$(addprefix $(GRAPHICS_DIR)/, \
+					colors.c \
+					colors2.c \
+					ray_tracing.c \
+					draw_pixels.c \
+					graphic_layer.c \
+					light.c \
+					checkerboard.c \
+					pattern.c)
+# end GRAPHICS
 
 # HOOKS
 HOOK_DIR		=	hooks
 HOOKS			=	$(addprefix $(HOOK_DIR)/, \
-register_hooks.c	register_hooks_utils.c)
+					register_hooks.c \
+					object_selection.c \
+					exit.c \
+					move_utilities.c \
+					move_qe.c \
+					move_wasd.c \
+					rotation_utilities.c \
+					rotation.c \
+					change_settings.c \
+					pattern_settings.c)
 # end HOOKS
 
-# RAY_TRACING
-RAY_TRACING_DIR		=	ray_tracing
-RAY_TRACING			=	$(addprefix $(RAY_TRACING_DIR)/, \
-ray_tracing.c)
-# end RAY_TRACING
-
-# DRAWING
-DRAWING_DIR		=	draw_pixels
-DRAWING			=	$(addprefix $(DRAWING_DIR)/, \
-draw_pixels.c)
-# end DRAWING
-
-# COLOURS
-COLOURS_DIR		=	colours
-COLOURS			=	$(addprefix $(COLOURS_DIR)/, \
-colours.c)
-# end COLOURS
-
-SRCS			=	$(MAIN) $(PARSER) $(VECTORS) $(OBJECTS) $(HOOKS) $(RAY_TRACING) $(DRAWING) $(COLOURS)
+SRCS			=	$(MAIN) $(PARSER) $(VECTORS) $(OBJECTS) $(HOOKS) $(GRAPHICS)

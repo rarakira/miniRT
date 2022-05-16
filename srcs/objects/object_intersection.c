@@ -6,96 +6,96 @@
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:02:01 by lbaela            #+#    #+#             */
-/*   Updated: 2022/02/08 20:50:08 by lbaela           ###   ########.fr       */
+/*   Updated: 2022/03/01 18:14:12 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
 
 #include "../../includes/minirt.h"
-#include "../../includes/objects.h"
 
-static void	add_light(t_minirt *minirt, t_point *point)
+static void	get_hit_cy_co(t_object *obj)
 {
-	float		light;
-	float		n_dot_l;
-	t_rgb		ambient;
-	t_rgb		diffuse;
-	t_vector	l_len;
-
-	/* add ambient lighting */
-	light = minirt->ambient->lighting_ratio;
-	ambient = calc_rgb_light(minirt->ambient->rgb, light);
-	/* add diffuse lighting */
-	l_len = vect_substract(minirt->light->point, &point->hit_coord);
-	n_dot_l = vect_dot_product(&point->norm_v, minirt->light->point);
-	if (n_dot_l <= 0.0 && point->type == 'P')
+	if ((obj->type == CYLINDER || obj->type == CONE)
+		&& obj->hit.type == BODY)
 	{
-		point->norm_v = vect_mult(&point->norm_v, -1.0);
-		n_dot_l *= -1.0;
+		obj->hit.norm_v = vect_substract(
+				vect_substract(obj->hit.point, obj->center),
+				vect_mult(obj->norm_v, obj->hit.m));
 	}
-	if (n_dot_l > 0.0)
+	if (obj->type == CONE && obj->hit.type == BODY)
 	{
-		light = minirt->light->brightness_ratio * n_dot_l
-			/ (vect_len(&point->norm_v) * vect_len(&l_len));
-		diffuse = calc_rgb_light(minirt->light->rgb, light);
-		ambient = add_rgb_light(ambient, diffuse);
-	}
-	point->rgb = multiply_rgbs(point->rgb, ambient);
-	point->colour = ft_rgb_hex(0, point->rgb);
-}
-
-static void	add_specular(t_vector *ray, t_point *point, t_light *light)
-{
-	t_vector	reflect;
-	t_rgb		spec;
-	double		strength;
-	float		r_dot_v;
-
-	reflect = reflect_vector(vect_mult(light->point, -1.0), point->norm_v);
-	r_dot_v = vect_dot_product(&reflect, ray);
-	if (r_dot_v > 0.0)
-	{
-		strength = light->brightness_ratio
-			* pow(r_dot_v / vect_len(&reflect) * vect_len(ray), 32);
-		spec = calc_rgb_light(light->rgb, 0.5 * strength);
-		point->colour = ft_rgb_hex(0, add_rgb_light(point->rgb, spec));
+		obj->hit.norm_v = vect_substract(obj->hit.norm_v,
+				vect_mult(obj->norm_v, tan(obj->radius / obj->height)
+					* tan(obj->radius / obj->height) * obj->hit.m));
 	}
 }
 
-inline static void	update_point(t_point *point, t_object *obj)
+t_vector	get_hit_direction(t_object *obj, t_vector ray)
+{
+	obj->hit.point = vect_mult(ray, obj->hit.dist);
+	if (obj->type == SPHERE)
+		obj->hit.norm_v = vect_substract(obj->hit.point, obj->center);
+	else if ((obj->type == CYLINDER || obj->type == CONE)
+		&& obj->hit.type == BODY)
+		get_hit_cy_co(obj);
+	else if (obj->type == PLANE || obj->hit.type == CAP)
+	{
+		obj->hit.norm_v = obj->norm_v;
+		if (vect_dot_product(ray, obj->norm_v) > 0.0)
+			obj->hit.is_inside = 1;
+	}
+	if (obj->hit.is_inside)
+		obj->hit.norm_v = vect_mult(obj->hit.norm_v, -1);
+	normalise_vect(&obj->hit.norm_v);
+	return (obj->hit.norm_v);
+}
+
+inline static void	update_point_vals(	t_minirt *minirt, t_point *point,
+										t_object *obj, t_vector ray)
 {
 	if (obj == NULL)
 	{
-		point->colour = COL_BLACK;
+		point->color = COL_BLACK;
 		return ;
 	}
 	point->rgb = obj->rgb;
-	point->colour = obj->colour;
-	point->norm_v = obj->hit_norm_v;
-	point->hit_coord = obj->hit_point;
+	if (obj->type == SPHERE)
+	{
+		if (minirt->apply_checkerboard)
+			point->rgb = ft_checkerboard(obj, point);
+		if (minirt->apply_texture || minirt->apply_bump)
+			point->rgb = ft_pattern(obj, ray, minirt);
+	}
+	point->color = ft_rgb_hex(0, point->rgb);
+	if (obj->type == LIGHT)
+		return ;
+	point->norm_v = get_hit_direction(obj, ray);
+	point->hit_coord = obj->hit.point;
 	point->type = obj->type;
+	update_point_color(&minirt->scene, point, ray);
 }
 
-void	object_intersects(	t_minirt *minirt,
-							t_object **objs, t_vector *ray, t_point *point)
+t_object	*object_intersects(t_minirt *minirt,
+							t_object **objs, t_vector ray, t_point *point)
 {
 	int			i;
 	float		res;
 
 	i = 0;
 	point->obj = NULL;
-	point->dist = MAX_DIST;
+	point->dist = INFINITY;
 	while (objs[i] != NULL)
 	{
-		if (objs[i]->type == 'S')
-			res = sphere_intersects(minirt->camera, objs[i], ray);
-		else if (objs[i]->type == 'C')
-			res = cylinder_intersects(minirt->camera, objs[i], ray);
-		else if (objs[i]->type == 'P')
-			res = plane_intersects(minirt->camera, objs[i], ray);
+		if (objs[i]->type == SPHERE || objs[i]->type == LIGHT)
+			res = sphere_intersects(minirt->scene.camera.point, objs[i], ray);
+		else if (objs[i]->type == CYLINDER)
+			res = cylinder_intersects(minirt->scene.camera.point, objs[i], ray);
+		else if (objs[i]->type == PLANE)
+			res = plane_intersects(minirt->scene.camera.point, objs[i], ray);
+		else if (objs[i]->type == CONE)
+			res = cone_intersects(minirt->scene.camera.point, objs[i], ray);
 		if (res != 0 && res < point->dist)
 		{
 			point->obj = objs[i];
@@ -103,9 +103,6 @@ void	object_intersects(	t_minirt *minirt,
 		}
 		i++;
 	}
-	update_point(point, point->obj);
-	if (point->obj == NULL)
-		return ;
-	add_light(minirt, point);
-	add_specular(ray, point, minirt->light);
+	update_point_vals(minirt, point, point->obj, ray);
+	return (point->obj);
 }

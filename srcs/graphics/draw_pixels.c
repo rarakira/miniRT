@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   draw_pixels.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lbaela <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/22 14:42:40 by lbaela            #+#    #+#             */
-/*   Updated: 2021/04/29 11:53:36 by lbaela           ###   ########.fr       */
+/*   Created: 2022/01/19 11:27:42 by lbaela            #+#    #+#             */
+/*   Updated: 2022/02/28 21:46:23 by lbaela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../includes/minirt.h"
 
-/* Function allocates space for 'count' objects that are 'size' bytes each and
-returns a pointer to the allocated memory.
-
-The allocated memory is filled with bytes of value zero. */
-void	*ft_calloc(size_t count, size_t size)
+static int	offscreen(int x, int y)
 {
-	void	*ptr;
+	if (x < 0 || x >= WIN_WIDTH)
+		return (1);
+	if (y < 0 || y >= WIN_HEIGHT)
+		return (1);
+	return (0);
+}
 
-	ptr = malloc(count * size);
-	if (ptr)
-		ft_bzero(ptr, count * size);
-	return (ptr);
+void	my_mlx_pixel_put(t_minirt *minirt, int x, int y, int color)
+{
+	char	*dst;
+
+	if (offscreen(x, y))
+		return ;
+	dst = minirt->addr + (y * minirt->line_length
+			+ x * (minirt->bits_per_pixel));
+	*(unsigned int *)dst = color;
 }
