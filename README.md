@@ -1,4 +1,4 @@
-_This is a **21 School/Ecole 42** Project_
+_This is a **21 School/Ecole 42** Project. Worked in team with [Dredfort](https://github.com/dredfort42)_
 
 # miniRT (Raytracing)
 
@@ -48,8 +48,11 @@ To close window press `esc`.
 ![White scene](preview/miniRT-white-scene-2.png)
 ![Complex scene](preview/miniRT-complex-1.png)
 ![Complex scene](preview/miniRT-complex-2.png)
-![Light movement](preview/miniRT_light.gif)
 ![Complex scene](preview/miniRT-complex-3.png)
+
+### Shading render on light movement
+
+![Light movement](preview/miniRT_light.gif)
 
 ## Useful links
 
